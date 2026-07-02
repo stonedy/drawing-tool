@@ -1,0 +1,888 @@
+:root {
+  color-scheme: light;
+  --bg: #ded5c6;
+  --paper: #eadbc8;
+  --panel: #fff8ea;
+  --panel-soft: rgba(255, 248, 234, 0.72);
+  --ink: #171611;
+  --muted: rgba(23, 22, 17, 0.66);
+  --line: rgba(23, 22, 17, 0.16);
+  --line-strong: rgba(23, 22, 17, 0.26);
+  --blue-block: #8fb9ff;
+  --yellow-block: #f2d66d;
+  --danger: #a13a2f;
+  --accent: #2563eb;
+  --accent-strong: #1749b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  max-width: 7ch;
+  margin: 34px 0 auto;
+  font-size: 56px;
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 1;
+}
+
+button {
+  min-width: 38px;
+  height: 38px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--panel-soft);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0 14px;
+  white-space: nowrap;
+  transition: background-color 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out, transform 160ms ease-out;
+}
+
+button:hover {
+  border-color: var(--accent);
+  background: rgba(255, 248, 234, 0.94);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+button.primary:hover {
+  background: var(--accent-strong);
+}
+
+button.danger {
+  color: var(--danger);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 285px minmax(0, 1fr);
+  gap: 20px;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: 20px;
+  background: var(--paper);
+  transition: grid-template-columns 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.titleRail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 26px;
+  background: rgba(255, 248, 234, 0.56);
+  padding: 24px;
+  transition: padding 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.titleRail p,
+.titleRail span,
+.globalMeta p,
+#status,
+#activeCount,
+#globalSpeedLabel,
+.emptyState,
+.strokeMeta,
+.saveStatus,
+.speedPanel span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.studio {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 18px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.24fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 18px;
+  min-height: 148px;
+  border-radius: 28px;
+  background: var(--blue-block);
+  padding: 22px;
+  transition: min-height 420ms cubic-bezier(.22, 1, .36, 1), padding 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.globalMeta strong {
+  display: grid;
+  gap: 8px;
+  max-width: 14ch;
+  margin-top: 8px;
+  font-size: 26px;
+  line-height: 1;
+}
+
+#status::before {
+  content: "";
+  margin: 0;
+}
+
+.sessionName {
+  display: block;
+}
+
+.tools {
+  min-width: 0;
+}
+
+.instrumentPanel {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(250px, 1fr) minmax(110px, 0.42fr) minmax(170px, 0.58fr);
+  align-items: stretch;
+  gap: 12px;
+}
+
+.toolGroup,
+.globalControls {
+  display: grid;
+  grid-template-rows: auto minmax(42px, 1fr) auto;
+  align-content: end;
+  gap: 10px;
+  min-width: 0;
+  min-height: 126px;
+  border: 0;
+  border-radius: 22px;
+  background: rgba(255, 248, 234, 0.32);
+  padding: 14px;
+}
+
+.toolGroupLabel,
+.globalHeader h2 {
+  display: block;
+  padding: 0;
+  border: 0;
+  color: rgba(23, 22, 17, 0.78);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.toolRow,
+.globalButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tools label {
+  min-width: 0;
+}
+
+.iconButton {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.svgIcon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fillIcon {
+  fill: currentColor;
+  stroke: none;
+}
+
+.smallIconButton {
+  flex-basis: 34px;
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+}
+
+.speedIconButton {
+  font-size: 13px;
+}
+
+.colorButton {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.colorButton input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.colorIcon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #171611;
+}
+
+.widthIcon {
+  display: block;
+  width: 24px;
+  height: var(--brush-width, 5px);
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.gradientIcon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4d4d 0%, #c244ff 48%, #2563eb 100%);
+}
+
+input[type="color"] {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+input[type="range"] {
+  width: 92px;
+  accent-color: var(--accent);
+}
+
+.gradientControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  grid-column: 1 / -1;
+  min-height: 42px;
+  border: 1px solid rgba(23, 22, 17, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 248, 234, 0.52);
+  padding: 5px;
+}
+
+.widthPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(23, 22, 17, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 248, 234, 0.52);
+  padding: 8px 10px;
+}
+
+.widthPanel span {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+}
+
+.gradientStops {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 8px;
+}
+
+.gradientStop {
+  position: relative;
+  width: 32px;
+  height: 30px;
+}
+
+.gradientStop input {
+  width: 32px;
+  height: 30px;
+}
+
+.gradientStop button {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0;
+  background: #fff;
+  color: var(--danger);
+  font-size: 12px;
+  line-height: 1;
+}
+
+#addGradientColor {
+  height: 30px;
+}
+
+.saveStatus {
+  min-width: 58px;
+  padding: 0 4px;
+}
+
+.globalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0;
+}
+
+.globalHeader h2 {
+  font-size: 13px;
+}
+
+.globalButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.globalButtons button {
+  padding: 0;
+}
+
+.globalControls .speedPanel {
+  grid-column: auto;
+}
+
+.speedPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  background: rgba(255, 248, 234, 0.52);
+  padding: 8px 10px;
+}
+
+.speedPanel input[type="range"] {
+  width: 100%;
+}
+
+.speedPanel span {
+  text-align: right;
+}
+
+.timingPanel {
+  display: grid;
+  gap: 8px;
+  border-radius: 16px;
+  background: rgba(255, 248, 234, 0.48);
+  padding: 9px;
+}
+
+.timingPanel label {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: 8px;
+}
+
+.timingPanel span,
+.timingPanel em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.timingPanel input[type="range"] {
+  width: 100%;
+}
+
+.workArea {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 332px;
+  gap: 18px;
+  min-height: 0;
+  overflow: hidden;
+  transition: grid-template-columns 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.workspace {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.canvasShell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--panel);
+  transition: min-height 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+#drawingCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  background: #fff8ea;
+  touch-action: none;
+  cursor: crosshair;
+  transition: min-height 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.extendButton {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 54px;
+  height: 54px;
+  min-height: 54px;
+  border-color: rgba(23, 22, 17, 0.22);
+  background: rgba(255, 248, 234, 0.58);
+  backdrop-filter: blur(10px);
+  padding: 0;
+}
+
+.extendButton span,
+.extendButton span::before,
+.extendButton span::after {
+  position: absolute;
+  display: block;
+  content: "";
+}
+
+.extendButton span {
+  inset: 16px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.extendButton span::before {
+  right: -2px;
+  bottom: -2px;
+  width: 16px;
+  height: 2px;
+  background: var(--ink);
+}
+
+.extendButton span::after {
+  right: -2px;
+  bottom: -2px;
+  width: 2px;
+  height: 16px;
+  background: var(--ink);
+}
+
+.app.expanded {
+  grid-template-columns: 118px minmax(0, 1fr);
+}
+
+.app.expanded .titleRail {
+  padding: 18px 14px;
+}
+
+.app.expanded .titleRail h1 {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  max-width: none;
+  margin: 18px auto;
+  font-size: 34px;
+}
+
+.app.expanded .titleRail span {
+  display: none;
+}
+
+.app.expanded .topbar {
+  min-height: 84px;
+  grid-template-columns: minmax(140px, 0.18fr) minmax(0, 1fr);
+  padding: 14px 16px;
+}
+
+.app.expanded .globalMeta strong {
+  max-width: none;
+  font-size: 18px;
+}
+
+.app.expanded .sessionName {
+  display: none;
+}
+
+.app.expanded #status::before {
+  content: "";
+  margin: 0;
+}
+
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1.18fr) 390px;
+}
+
+.app.expanded .canvasShell,
+.app.expanded #drawingCanvas {
+  min-height: 0;
+}
+
+.app.expanded .extendButton span {
+  transform: rotate(180deg);
+}
+
+.sidebar {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--yellow-block);
+  padding: 18px;
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.strokeList {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.strokeItem {
+  display: grid;
+  gap: 10px;
+  border-radius: 18px;
+  background: rgba(255, 248, 234, 0.58);
+  padding: 12px;
+  transition: background-color 160ms ease-out;
+}
+
+.strokeItem.playingStroke {
+  background: rgba(255, 248, 234, 0.9);
+}
+
+.strokeTitle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.strokeName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 700;
+}
+
+.swatch {
+  width: 44px;
+  height: 8px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+.strokeControls {
+  display: grid;
+  grid-template-columns: repeat(6, 34px);
+  justify-content: start;
+  gap: 7px;
+}
+
+.strokeControls button {
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  padding: 0;
+}
+
+.strokeControls .svgIcon {
+  width: 17px;
+  height: 17px;
+}
+
+.progressTrack {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 248, 234, 0.5);
+}
+
+.progressFill {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff4d4d, #c244ff, #2563eb);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.hiddenStroke {
+  opacity: 0.58;
+}
+
+.emptyState {
+  display: grid;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.emptyState p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.emptyStrokePreview {
+  display: grid;
+  gap: 10px;
+  border-radius: 18px;
+  background: rgba(255, 248, 234, 0.58);
+  padding: 12px;
+}
+
+.previewStrokeTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.previewStrokeTitle span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.previewStrokeTitle i {
+  display: block;
+  width: 44px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4d4d, #c244ff, #2563eb);
+}
+
+.previewStrokeLine {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4d4d, #c244ff 68%, rgba(255, 248, 234, 0.72) 68%);
+}
+
+.previewStrokeButtons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.previewStrokeButtons span {
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel-soft);
+}
+
+@media (max-width: 1100px) {
+  .app,
+  .app.expanded {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .titleRail,
+  .app.expanded .titleRail {
+    min-height: 110px;
+    padding: 18px;
+  }
+
+  .titleRail h1,
+  .app.expanded .titleRail h1 {
+    writing-mode: horizontal-tb;
+    max-width: none;
+    margin: 12px 0;
+    font-size: 38px;
+  }
+
+  .titleRail span {
+    display: block;
+  }
+
+  .topbar,
+  .app.expanded .topbar,
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: 1fr;
+  }
+
+  .tools {
+    justify-content: flex-start;
+  }
+
+  .canvasShell,
+  #drawingCanvas,
+  .app.expanded .canvasShell,
+  .app.expanded #drawingCanvas {
+    min-height: clamp(420px, 58svh, 680px);
+  }
+
+  .strokeList {
+    max-height: 44svh;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .topbar {
+    min-height: 0;
+  }
+
+  .globalMeta strong {
+    max-width: none;
+    font-size: 24px;
+  }
+
+  .tools,
+  .toolGroup,
+  .globalControls,
+  .globalButtons {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .toolGroup,
+  .globalControls {
+    border-radius: 22px;
+  }
+
+  .toolGroupLabel {
+    min-height: 24px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(23, 22, 17, 0.18);
+    padding: 0 8px;
+  }
+
+  .tools label,
+  .tools button,
+  .gradientControls {
+    width: 100%;
+  }
+
+  .gradientControls,
+  .globalControls .speedPanel {
+    grid-column: auto;
+  }
+
+  .canvasShell,
+  #drawingCanvas,
+  .app.expanded .canvasShell,
+  .app.expanded #drawingCanvas {
+    min-height: clamp(340px, 54svh, 560px);
+  }
+
+  .strokeControls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

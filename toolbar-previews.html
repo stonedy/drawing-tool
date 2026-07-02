@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Toolbar Preview Directions</title>
+    <link rel="stylesheet" href="toolbar-previews.css">
+  </head>
+  <body>
+    <main class="previews">
+      <section class="preview direction-a">
+        <aside class="rail"><b>01</b><span>Layered Console</span></aside>
+        <div class="topbar">
+          <div class="session">
+            <p>Global studio</p>
+            <strong>1 stroke</strong>
+          </div>
+          <div class="controlStack">
+            <div class="row primaryRow">
+              <div class="group brushGroup">
+                <span>Brush</span>
+                <button>Color <i class="swatch"></i></button>
+                <label>Width <input type="range" value="40"></label>
+                <button>Gradient Off</button>
+              </div>
+              <div class="group projectGroup">
+                <span>Project</span>
+                <button>Save</button>
+                <button disabled>Restore</button>
+              </div>
+            </div>
+            <div class="row transportRow">
+              <div class="group editGroup">
+                <span>Edit</span>
+                <button>Undo</button>
+                <button>Clear</button>
+              </div>
+              <div class="transport">
+                <span>All Strokes <small>1x</small></span>
+                <button class="primary">Play All</button>
+                <button>Reverse</button>
+                <button>Loop</button>
+                <button>Speed 1x</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview direction-b">
+        <aside class="rail"><b>02</b><span>Studio Instrument Bar</span></aside>
+        <div class="topbar instrumentBar">
+          <div class="session compact">
+            <p>Stroke Replay</p>
+            <strong>1 stroke / 1x</strong>
+          </div>
+          <div class="instrumentPanel">
+            <div class="instrument">
+              <span>Brush</span>
+              <button><i class="swatch"></i></button>
+              <label><small>Width</small><input type="range" value="40"></label>
+              <button>Gradient</button>
+            </div>
+            <div class="instrument">
+              <span>Motion</span>
+              <button class="primary">Play</button>
+              <button>Back</button>
+              <button>Loop</button>
+              <button>1x</button>
+            </div>
+            <div class="instrument slim">
+              <span>File</span>
+              <button>Save</button>
+              <button>Restore</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview direction-c">
+        <aside class="rail"><b>03</b><span>Command Ribbon</span></aside>
+        <div class="topbar ribbonBar">
+          <div class="session ribbonSession">
+            <p>Live composition</p>
+            <strong>1 stroke</strong>
+          </div>
+          <div class="ribbon">
+            <div class="ribbonGroup">
+              <span>Mark</span>
+              <button>Color</button>
+              <button>Width</button>
+              <button>Gradient Off</button>
+            </div>
+            <div class="ribbonGroup activeRibbon">
+              <span>Playback</span>
+              <button class="primary">Play All</button>
+              <button>Reverse</button>
+              <button>Loop</button>
+              <button>Speed 1x</button>
+            </div>
+            <div class="ribbonGroup">
+              <span>Session</span>
+              <button>Undo</button>
+              <button>Clear</button>
+              <button>Save</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview direction-d">
+        <aside class="rail"><b>04</b><span>Gallery Workbench</span></aside>
+        <div class="topbar workbenchBar">
+          <div class="session workbenchSession">
+            <p>Global studio</p>
+            <strong>1 stroke</strong>
+          </div>
+          <div class="workbench">
+            <div class="toolPlate">
+              <span>Brush material</span>
+              <button>Color <i class="swatch"></i></button>
+              <label>Width <input type="range" value="40"></label>
+              <button>Gradient Off</button>
+            </div>
+            <div class="toolPlate transportPlate">
+              <span>Motion</span>
+              <button class="primary">Play All</button>
+              <button>Reverse</button>
+              <button>Loop</button>
+              <button>Speed 1x</button>
+            </div>
+            <div class="quietActions">
+              <button>Undo</button>
+              <button>Clear</button>
+              <button>Save</button>
+              <button disabled>Restore</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

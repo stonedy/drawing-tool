@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stroke Replay UI Directions V2</title>
+    <link rel="stylesheet" href="ui-directions-v2.css">
+  </head>
+  <body>
+    <main class="directions">
+      <section class="direction direction-canvas-first" data-direction>
+        <header class="topRail">
+          <div class="brand">
+            <strong>Stroke Replay</strong>
+            <span>04 strokes / saved 14:32</span>
+          </div>
+          <nav class="toolPills" aria-label="Brush and project tools">
+            <button>Color</button>
+            <button>Gradient</button>
+            <button>Width 05</button>
+            <button>Save</button>
+            <button>Restore</button>
+          </nav>
+        </header>
+
+        <div class="workSurface">
+          <div class="canvasBlock">
+            <svg viewBox="0 0 760 500" aria-label="Large drawing board preview">
+              <path class="warm" d="M120 190 L252 116 L384 206 L558 134" />
+              <path class="cool" d="M126 350 L308 268 L470 372 L646 280" />
+              <path class="violet" d="M120 392 C274 268 444 470 674 154" />
+            </svg>
+            <button class="expandButton" data-expand type="button" aria-label="Expand drawing board">Expand board</button>
+          </div>
+          <aside class="strokeDock">
+            <div class="dockHeader">
+              <h2>Stroke controls</h2>
+              <span>primary panel</span>
+            </div>
+            <article class="strokeRow active">
+              <b>01</b><span class="line"></span><em>playing</em><button>Pause</button>
+            </article>
+            <article class="strokeRow">
+              <b>02</b><span class="line alt"></span><em>loop</em><button>Replay</button>
+            </article>
+            <article class="strokeRow">
+              <b>03</b><span class="line warmLine"></span><em>1.5x</em><button>Speed</button>
+            </article>
+            <div class="allControls">
+              <button>Play all</button><button>Reverse all</button><button>Loop all</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="direction direction-bottom-index" data-direction>
+        <header class="topRail compact">
+          <div class="brand">
+            <strong>Stroke Replay</strong>
+            <span>canvas first / controls below</span>
+          </div>
+          <nav class="toolPills">
+            <button>Brush</button><button>Gradient</button><button>Project</button>
+          </nav>
+        </header>
+
+        <div class="stackedStudio">
+          <div class="canvasBlock">
+            <svg viewBox="0 0 900 430" aria-label="Wide board preview">
+              <path class="ink" d="M164 132 C304 218 408 42 706 160" />
+              <path class="teal" d="M148 308 L330 218 L510 322 L744 216" />
+              <path class="warm" d="M218 220 L386 194 L566 284" />
+            </svg>
+            <button class="expandButton" data-expand type="button" aria-label="Expand drawing board">Expand board</button>
+          </div>
+          <div class="horizontalIndex">
+            <article><b>001</b><span></span><em>00:01.42</em><button>Replay</button></article>
+            <article class="active"><b>002</b><span></span><em>looping</em><button>Pause</button></article>
+            <article><b>003</b><span></span><em>hidden</em><button>Show</button></article>
+            <article><b>004</b><span></span><em>2x</em><button>Reverse</button></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="direction direction-floating-dock" data-direction>
+        <header class="topRail minimal">
+          <div class="brand">
+            <strong>Stroke Replay</strong>
+            <span>floating dock / maximum board</span>
+          </div>
+          <nav class="toolPills">
+            <button>Color</button><button>Width</button><button>Save</button>
+          </nav>
+        </header>
+
+        <div class="immersiveBoard">
+          <svg viewBox="0 0 960 570" aria-label="Immersive board preview">
+            <path class="warm" d="M170 210 L338 124 L506 234 L734 142" />
+            <path class="cool" d="M178 404 L394 296 L596 424 L798 318" />
+            <path class="violet" d="M148 454 C340 290 560 544 850 180" />
+          </svg>
+          <aside class="floatingDock">
+            <h2>Motion archive</h2>
+            <article class="active"><b>01</b><span></span><button>Pause</button></article>
+            <article><b>02</b><span></span><button>Loop</button></article>
+            <article><b>03</b><span></span><button>Hide</button></article>
+          </aside>
+          <button class="expandButton" data-expand type="button" aria-label="Expand drawing board">Expand board</button>
+        </div>
+      </section>
+    </main>
+    <script src="ui-directions-v2.js"></script>
+  </body>
+</html>

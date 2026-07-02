@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Soft Gallery Blocks V3</title>
+    <link rel="stylesheet" href="ui-directions-v3.css">
+  </head>
+  <body>
+    <main class="directions">
+      <section class="direction variant-a" data-direction>
+        <div class="titleRail">
+          <p>Stroke Replay</p>
+          <h1>Soft Gallery Blocks</h1>
+          <span>Gesture archive for kinetic line work.</span>
+        </div>
+
+        <div class="studio">
+          <header class="globalBlock">
+            <div class="globalMeta">
+              <p>Global transport</p>
+              <strong>04 strokes / 1.5x / loop off</strong>
+            </div>
+            <nav class="globalTools" aria-label="Global tools">
+              <button>Brush</button>
+              <button>Gradient</button>
+              <button>Play all</button>
+              <button>Reverse</button>
+              <button>Loop</button>
+              <button>Save</button>
+              <button>Restore</button>
+            </nav>
+          </header>
+
+          <div class="workArea">
+            <div class="canvasBlock">
+              <svg viewBox="0 0 900 560" aria-label="Canvas preview">
+                <path class="stroke one" d="M105 172 C226 66 350 260 488 136 S712 82 795 208" />
+                <path class="stroke two" d="M128 390 L278 292 L442 408 L642 272 L792 346" />
+                <path class="stroke three" d="M176 292 C312 186 432 506 750 156" />
+              </svg>
+              <button class="extend" data-expand aria-label="Expand board">
+                <span></span>
+              </button>
+            </div>
+
+            <aside class="strokeDock">
+              <header>
+                <h2>Stroke index</h2>
+                <button>+ group</button>
+              </header>
+              <article class="strokeCard active">
+                <b>01</b><i></i><span>playing</span>
+                <div class="cardTools"><button>Play</button><button>Reverse</button><button>Loop</button><button>Hide</button></div>
+              </article>
+              <article class="strokeCard">
+                <b>02</b><i></i><span>1.5x</span>
+                <div class="cardTools"><button>Play</button><button>Reverse</button><button>Loop</button><button>Hide</button></div>
+              </article>
+              <article class="strokeCard">
+                <b>03</b><i></i><span>hidden</span>
+                <div class="cardTools"><button>Play</button><button>Reverse</button><button>Loop</button><button>Show</button></div>
+              </article>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="direction variant-b" data-direction>
+        <div class="titleRail compactCopy">
+          <p>Studio State</p>
+          <h1>Process Wall</h1>
+          <span>More structured, more control-room.</span>
+        </div>
+
+        <div class="studio">
+          <header class="globalBlock splitTools">
+            <div class="globalMeta">
+              <p>Session</p>
+              <strong>Gradient brush / random blend</strong>
+            </div>
+            <nav class="globalTools" aria-label="Global tools">
+              <button>Play all</button><button>Reverse</button><button>Loop</button><button>Speed 1x</button>
+              <button>Save</button><button>Restore</button>
+            </nav>
+          </header>
+
+          <div class="workArea">
+            <div class="canvasBlock graphCanvas">
+              <svg viewBox="0 0 900 560" aria-label="Canvas preview">
+                <path class="stroke four" d="M122 140 L286 246 L430 116 L612 252 L782 134" />
+                <path class="stroke five" d="M116 402 C284 252 398 482 560 320 S722 196 798 352" />
+              </svg>
+              <button class="extend" data-expand aria-label="Expand board"><span></span></button>
+            </div>
+
+            <aside class="strokeDock denseDock">
+              <header><h2>Lines</h2><button>Sort</button></header>
+              <article class="miniStroke active"><b>01</b><i></i><span>Loop</span><button>Play</button></article>
+              <article class="miniStroke"><b>02</b><i></i><span>2x</span><button>Reverse</button></article>
+              <article class="miniStroke"><b>03</b><i></i><span>Visible</span><button>Hide</button></article>
+              <article class="miniStroke"><b>04</b><i></i><span>Saved</span><button>Play</button></article>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="direction variant-c" data-direction>
+        <div class="titleRail darkRail">
+          <p>Motion Ledger</p>
+          <h1>Gallery Console</h1>
+          <span>A calmer archival take with stronger object presence.</span>
+        </div>
+
+        <div class="studio">
+          <header class="globalBlock darkTools">
+            <div class="globalMeta">
+              <p>Live composition</p>
+              <strong>Canvas-led playback controls</strong>
+            </div>
+            <nav class="globalTools" aria-label="Global tools">
+              <button>Brush</button><button>Colors</button><button>Play all</button><button>Reverse</button>
+              <button>Loop</button><button>Speed</button><button>Save</button>
+            </nav>
+          </header>
+
+          <div class="workArea wideDock">
+            <div class="canvasBlock darkCanvas">
+              <svg viewBox="0 0 900 560" aria-label="Canvas preview">
+                <path class="stroke six" d="M118 212 C260 76 372 292 526 170 S694 84 802 250" />
+                <path class="stroke seven" d="M138 374 C318 284 412 476 594 314 S726 228 802 392" />
+                <path class="stroke eight" d="M236 120 L320 432 L548 154 L686 410" />
+              </svg>
+              <button class="extend" data-expand aria-label="Expand board"><span></span></button>
+            </div>
+
+            <aside class="strokeDock ledgerDock">
+              <header><h2>Motion ledger</h2><button>All</button></header>
+              <article class="ledger active"><b>001</b><i></i><span>00:01.4</span><button>Replay</button></article>
+              <article class="ledger"><b>002</b><i></i><span>loop</span><button>Pause</button></article>
+              <article class="ledger"><b>003</b><i></i><span>1.25x</span><button>Reverse</button></article>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="ui-directions-v3.js"></script>
+  </body>
+</html>

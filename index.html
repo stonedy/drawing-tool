@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stroke Replay Drawing Tool</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main id="app" class="app">
+      <aside class="titleRail" aria-label="Product identity">
+        <p>Stroke Replay</p>
+        <h1>Soft Gallery Blocks</h1>
+        <span>Gesture archive for kinetic line work.</span>
+      </aside>
+
+      <section class="studio" aria-label="Drawing studio">
+        <header class="topbar">
+          <div class="globalMeta">
+            <p>Global studio</p>
+            <strong><span class="sessionName">kinetic line studio</span><span id="status">0 strokes</span></strong>
+          </div>
+
+          <div class="tools instrumentPanel" aria-label="Drawing tools">
+            <div class="toolGroup instrument brushInstrument" aria-label="Brush">
+              <span class="toolGroupLabel">Brush</span>
+              <div class="toolRow">
+                <label class="iconButton colorButton" title="Color" aria-label="Color">
+                  <span class="colorIcon" aria-hidden="true"></span>
+                  <input id="colorPicker" type="color" value="#161616">
+                </label>
+                <button id="widthButton" class="iconButton" type="button" title="Width 5" aria-label="Width 5">
+                  <span class="widthIcon" aria-hidden="true"></span>
+                </button>
+                <button id="gradientButton" class="iconButton" type="button" title="Gradient Off" aria-label="Gradient Off" aria-pressed="false">
+                  <span class="gradientIcon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div id="widthPanel" class="widthPanel" hidden>
+                <input id="widthPicker" type="range" min="1" max="18" value="5" aria-label="Brush width">
+                <span id="widthValue">5</span>
+              </div>
+              <div id="gradientControls" class="gradientControls" hidden>
+                <div id="gradientStops" class="gradientStops"></div>
+                <button id="addGradientColor" class="iconButton smallIconButton" type="button" title="Add gradient color" aria-label="Add gradient color">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <section class="globalControls instrument motionInstrument" aria-label="Global stroke controls">
+              <div class="globalHeader">
+                <h2>Motion</h2>
+                <span id="globalSpeedLabel">1x</span>
+              </div>
+              <div class="globalButtons toolRow">
+                <button id="playAllButton" class="iconButton" type="button" title="Play all strokes" aria-label="Play all strokes">
+                  <svg class="svgIcon fillIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z"></path></svg>
+                </button>
+                <button id="backAllButton" class="iconButton" type="button" title="Reverse all strokes" aria-label="Reverse all strokes">
+                  <svg class="svgIcon fillIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5v14L5 12l11-7Z"></path></svg>
+                </button>
+                <button id="loopAllButton" class="iconButton" type="button" title="Loop all strokes" aria-label="Loop all strokes">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l4 4-4 4"></path><path d="M3 11V9a2 2 0 0 1 2-2h16"></path><path d="M7 21l-4-4 4-4"></path><path d="M21 13v2a2 2 0 0 1-2 2H3"></path></svg>
+                </button>
+                <button id="speedAllButton" class="iconButton speedIconButton" type="button" title="Speed 1x" aria-label="Speed 1x">
+                  <span aria-hidden="true">1x</span>
+                </button>
+                <button id="sequenceAllButton" class="iconButton" type="button" title="Play sequence" aria-label="Play sequence">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h5"></path><path d="M4 12h9"></path><path d="M4 18h5"></path><path d="M16 7v10"></path><path d="m13 14 3 3 3-3"></path></svg>
+                </button>
+              </div>
+              <div id="globalSpeedPanel" class="speedPanel" hidden>
+                <input id="globalSpeedInput" type="range" min="0.25" max="3" step="0.25" value="1" aria-label="Playback speed for all strokes">
+                <span id="globalSpeedValue">1x</span>
+              </div>
+            </section>
+
+            <div class="toolGroup instrument utilityInstrument" aria-label="Edit">
+              <span class="toolGroupLabel">Edit</span>
+              <div class="toolRow">
+                <button id="undoButton" class="iconButton" type="button" title="Undo last stroke" aria-label="Undo last stroke">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10a6 6 0 1 1-4.2 10.2"></path></svg>
+                </button>
+                <button id="clearButton" class="iconButton" type="button" title="Clear all strokes" aria-label="Clear all strokes">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="toolGroup instrument fileInstrument" aria-label="Project">
+              <span class="toolGroupLabel">Project</span>
+              <div class="toolRow">
+                <button id="saveButton" class="iconButton" type="button" title="Save project" aria-label="Save project">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+                </button>
+                <button id="restoreButton" class="iconButton" type="button" title="Restore project" aria-label="Restore project">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"></path><path d="m7 14 5-5 5 5"></path><path d="M5 3h14"></path></svg>
+                </button>
+                <button id="exportButton" class="iconButton" type="button" title="Export PNG" aria-label="Export PNG">
+                  <svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M8 15l2.5-3 2 2.4L15 11l3 4"></path><path d="M8 8h3"></path></svg>
+                </button>
+              </div>
+              <span id="saveStatus" class="saveStatus" aria-live="polite"></span>
+            </div>
+          </div>
+        </header>
+
+        <div class="workArea">
+          <section class="workspace" aria-label="Drawing workspace">
+            <div class="canvasShell" aria-label="Drawing surface">
+              <canvas id="drawingCanvas" aria-label="Drawing canvas"></canvas>
+              <button id="extendButton" class="extendButton" type="button" title="Expand canvas" aria-label="Expand drawing board" aria-pressed="false">
+                <span></span>
+              </button>
+            </div>
+          </section>
+
+          <aside class="sidebar" aria-label="Stroke controls">
+            <div class="sidebarHeader">
+              <h2>Stroke index</h2>
+              <span id="activeCount">0 visible</span>
+            </div>
+            <div id="strokeList" class="strokeList"></div>
+            <div id="emptyState" class="emptyState">
+              <p>Draw a stroke. It becomes a replayable object here.</p>
+              <div class="emptyStrokePreview" aria-hidden="true">
+                <div class="previewStrokeTitle">
+                  <span><i></i>Stroke 1</span>
+                  <small>preview</small>
+                </div>
+                <div class="previewStrokeLine"></div>
+                <div class="previewStrokeButtons">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
