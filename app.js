@@ -196,18 +196,37 @@ function drawStroke(stroke, progress = 1, targetCtx = ctx) {
   if (!stroke.visible || stroke.points.length < 2 || progress <= 0) return;
 
   const points = stroke.points;
-  const end = Math.max(2, Math.ceil(points.length * progress));
+  const clamped = Math.max(0, Math.min(1, progress));
+  const segments = [];
+  let totalLength = 0;
+
+  for (let i = 1; i < points.length; i += 1) {
+    const start = points[i - 1];
+    const end = points[i];
+    const length = Math.hypot(end.x - start.x, end.y - start.y);
+    if (length <= 0) continue;
+    segments.push({ start, end, length, from: totalLength });
+    totalLength += length;
+  }
+
+  if (!segments.length) return;
+
+  const targetLength = totalLength * clamped;
   targetCtx.lineCap = "round";
   targetCtx.lineJoin = "round";
   targetCtx.lineWidth = stroke.width;
 
-  for (let i = 1; i < end; i += 1) {
+  for (const segment of segments) {
+    if (targetLength <= segment.from) break;
+    const amount = Math.min(1, (targetLength - segment.from) / segment.length);
+    const x = segment.start.x + (segment.end.x - segment.start.x) * amount;
+    const y = segment.start.y + (segment.end.y - segment.start.y) * amount;
     targetCtx.strokeStyle = stroke.gradient
-      ? gradientColorAt(stroke.colors, (i - 1) / Math.max(1, points.length - 1))
+      ? gradientColorAt(stroke.colors, segment.from / totalLength)
       : stroke.color;
     targetCtx.beginPath();
-    targetCtx.moveTo(points[i - 1].x, points[i - 1].y);
-    targetCtx.lineTo(points[i].x, points[i].y);
+    targetCtx.moveTo(segment.start.x, segment.start.y);
+    targetCtx.lineTo(x, y);
     targetCtx.stroke();
   }
 }
@@ -385,7 +404,6 @@ function renderStrokeList() {
       controlButton(stroke.playing && stroke.direction === -1 ? "Pause stroke" : "Reverse stroke", stroke.playing && stroke.direction === -1 ? "pause" : "reverse", () => playStroke(stroke, -1), stroke.playing && stroke.direction === -1),
       controlButton(stroke.loop ? "Loop on" : "Loop stroke", "loop", () => toggleLoop(stroke), stroke.loop),
       controlButton(stroke.visible ? "Hide stroke" : "Show stroke", stroke.visible ? "hide" : "show", () => toggleVisible(stroke), false),
-      controlButton(`Speed ${formatSpeed(stroke.speed)}x`, "speed", () => toggleSpeed(stroke), stroke.speedOpen),
       controlButton("Delete stroke", "trash", () => deleteStroke(stroke), false, "danger")
     );
 
@@ -395,9 +413,6 @@ function renderStrokeList() {
 
     item.append(title, controls);
     item.append(timingPanel(stroke));
-    if (stroke.speedOpen) {
-      item.append(speedPanel(stroke));
-    }
     item.append(progressTrack);
     strokeList.append(item);
   }
@@ -444,28 +459,6 @@ function formatSpeed(speed) {
 function formatSeconds(ms) {
   const seconds = ms / 1000;
   return `${Number.isInteger(seconds) ? seconds : seconds.toFixed(2).replace(/0$/, "")}s`;
-}
-
-function speedPanel(stroke) {
-  const panel = document.createElement("div");
-  panel.className = "speedPanel";
-  panel.innerHTML = `
-    <input type="range" min="0.25" max="3" step="0.25" value="${stroke.speed}" aria-label="Playback speed for Stroke ${stroke.id}">
-    <span>${formatSpeed(stroke.speed)}x</span>
-  `;
-
-  const input = panel.querySelector("input");
-  const label = panel.querySelector("span");
-  input.addEventListener("input", () => {
-    stroke.speed = Number(input.value);
-    label.textContent = `${formatSpeed(stroke.speed)}x`;
-  });
-  input.addEventListener("change", () => {
-    stroke.speedOpen = false;
-    renderStrokeList();
-  });
-
-  return panel;
 }
 
 function timingPanel(stroke) {
@@ -537,11 +530,6 @@ function toggleLoop(stroke) {
   if (!stroke.loop && stroke.progress >= 1) {
     stopStroke(stroke, 1);
   }
-  renderStrokeList();
-}
-
-function toggleSpeed(stroke) {
-  stroke.speedOpen = !stroke.speedOpen;
   renderStrokeList();
 }
 
@@ -643,7 +631,6 @@ function normalizeSavedStroke(stroke) {
     delay: Math.max(0, Number(stroke.delay) || 0),
     delayRemaining: 0,
     duration: Number(stroke.duration) > 0 ? Number(stroke.duration) : undefined,
-    speedOpen: false,
     progress: Math.max(0, Math.min(1, Number.isFinite(stroke.progress) ? stroke.progress : 1))
   };
 }
@@ -810,7 +797,6 @@ function beginStroke(event) {
     delay: 0,
     delayRemaining: 0,
     duration: undefined,
-    speedOpen: false,
     progress: 1
   };
 }

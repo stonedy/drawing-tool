@@ -669,7 +669,7 @@ input[type="range"] {
 
 .strokeControls {
   display: grid;
-  grid-template-columns: repeat(6, 34px);
+  grid-template-columns: repeat(5, 34px);
   justify-content: start;
   gap: 7px;
 }
@@ -874,7 +874,7 @@ input[type="range"] {
   }
 
   .strokeControls {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(5, 34px);
   }
 }
 
