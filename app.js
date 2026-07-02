@@ -236,6 +236,7 @@ function strokeDuration(stroke) {
 function stopStroke(stroke, endProgress) {
   stroke.playing = false;
   stroke.progress = endProgress;
+  stroke.delayRemaining = 0;
 }
 
 function updatePlayback(delta) {
@@ -249,6 +250,12 @@ function updatePlayback(delta) {
 
   for (const stroke of strokes) {
     if (!stroke.playing) continue;
+
+    if (stroke.delayRemaining > 0) {
+      stroke.delayRemaining = Math.max(0, stroke.delayRemaining - delta);
+      changed = true;
+      continue;
+    }
 
     const step = (delta / strokeDuration(stroke)) * stroke.speed;
     stroke.progress += stroke.direction * step;
@@ -319,12 +326,15 @@ function updateTimeline(delta) {
     if (timelineTime < start) {
       stroke.progress = 0;
       stroke.playing = false;
+      stroke.delayRemaining = 0;
     } else if (timelineTime >= end) {
       stroke.progress = 1;
       stroke.playing = false;
+      stroke.delayRemaining = 0;
     } else {
       stroke.progress = Math.max(0, Math.min(1, (timelineTime - start) / duration));
       stroke.playing = true;
+      stroke.delayRemaining = 0;
       stroke.direction = 1;
     }
     if (wasPlaying !== stroke.playing) needsRender = true;
@@ -332,7 +342,10 @@ function updateTimeline(delta) {
 
   if (timelineTime >= total) {
     timelinePlaying = false;
-    for (const stroke of strokes) stroke.playing = false;
+    for (const stroke of strokes) {
+      stroke.playing = false;
+      stroke.delayRemaining = 0;
+    }
     needsRender = true;
   }
 
@@ -465,8 +478,8 @@ function timingPanel(stroke) {
       <em>${formatSeconds(stroke.delay || 0)}</em>
     </label>
     <label>
-      <span>Duration</span>
-      <input type="range" min="0.25" max="10" step="0.25" value="${strokeDuration(stroke) / 1000}" aria-label="Duration for Stroke ${stroke.id}">
+      <span>Draw time</span>
+      <input type="range" min="0.25" max="10" step="0.25" value="${strokeDuration(stroke) / 1000}" aria-label="Draw time for Stroke ${stroke.id}">
       <em>${formatSeconds(strokeDuration(stroke))}</em>
     </label>
   `;
@@ -503,11 +516,14 @@ function playStroke(stroke, direction) {
   stopTimeline();
   if (stroke.playing && stroke.direction === direction) {
     stroke.playing = false;
+    stroke.delayRemaining = 0;
   } else {
     stroke.direction = direction;
     stroke.playing = true;
     if (direction === 1 && stroke.progress >= 1) stroke.progress = 0;
     if (direction === -1 && stroke.progress <= 0) stroke.progress = 1;
+    const startsAtBoundary = (direction === 1 && stroke.progress <= 0) || (direction === -1 && stroke.progress >= 1);
+    stroke.delayRemaining = startsAtBoundary ? Math.max(0, Number(stroke.delay) || 0) : 0;
   }
 
   renderStrokeList();
@@ -625,6 +641,7 @@ function normalizeSavedStroke(stroke) {
     loop: Boolean(stroke.loop),
     speed: Number(stroke.speed) || 1,
     delay: Math.max(0, Number(stroke.delay) || 0),
+    delayRemaining: 0,
     duration: Number(stroke.duration) > 0 ? Number(stroke.duration) : undefined,
     speedOpen: false,
     progress: Math.max(0, Math.min(1, Number.isFinite(stroke.progress) ? stroke.progress : 1))
@@ -675,11 +692,14 @@ function playAll(direction) {
   for (const stroke of strokes) {
     if (allPlayingDirection) {
       stroke.playing = false;
+      stroke.delayRemaining = 0;
     } else {
       stroke.direction = direction;
       stroke.playing = true;
       if (direction === 1 && stroke.progress >= 1) stroke.progress = 0;
       if (direction === -1 && stroke.progress <= 0) stroke.progress = 1;
+      const startsAtBoundary = (direction === 1 && stroke.progress <= 0) || (direction === -1 && stroke.progress >= 1);
+      stroke.delayRemaining = startsAtBoundary ? Math.max(0, Number(stroke.delay) || 0) : 0;
     }
   }
 
@@ -702,6 +722,7 @@ function stopTimeline() {
   timelinePlaying = false;
   for (const stroke of strokes) {
     stroke.playing = false;
+    stroke.delayRemaining = 0;
   }
 }
 
@@ -716,6 +737,7 @@ function toggleSequencePlayback() {
   for (const stroke of strokes) {
     stroke.progress = 0;
     stroke.playing = false;
+    stroke.delayRemaining = 0;
     stroke.direction = 1;
   }
   timelinePlaying = true;
@@ -786,6 +808,7 @@ function beginStroke(event) {
     loop: globalLoop,
     speed: globalSpeed,
     delay: 0,
+    delayRemaining: 0,
     duration: undefined,
     speedOpen: false,
     progress: 1
