@@ -24,7 +24,6 @@ const playAllButton = document.getElementById("playAllButton");
 const backAllButton = document.getElementById("backAllButton");
 const loopAllButton = document.getElementById("loopAllButton");
 const speedAllButton = document.getElementById("speedAllButton");
-const sequenceAllButton = document.getElementById("sequenceAllButton");
 const globalSpeedPanel = document.getElementById("globalSpeedPanel");
 const globalSpeedInput = document.getElementById("globalSpeedInput");
 const globalSpeedValue = document.getElementById("globalSpeedValue");
@@ -40,8 +39,6 @@ let gradientColors = ["#ff4d4d", "#2563eb"];
 let globalSpeed = 1;
 let globalLoop = false;
 let saveStatusTimer = 0;
-let timelinePlaying = false;
-let timelineTime = 0;
 
 const STORAGE_KEY = "stroke-replay-project-v1";
 
@@ -54,8 +51,7 @@ const ICONS = {
   show: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>',
   speed: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 1 1 16 0"></path><path d="M12 13l4-4"></path><path d="M5 20h14"></path></svg>',
   trash: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"></path><path d="M10 11v6M14 11v6"></path><path d="M6 7l1 14h10l1-14"></path><path d="M9 7V4h6v3"></path></svg>',
-  download: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>',
-  sequence: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h5"></path><path d="M4 12h9"></path><path d="M4 18h5"></path><path d="M16 7v10"></path><path d="m13 14 3 3 3-3"></path></svg>'
+  download: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>'
 };
 
 function setIconButton(button, icon, label) {
@@ -226,9 +222,6 @@ function drawScene() {
 }
 
 function strokeDuration(stroke) {
-  if (Number.isFinite(stroke.duration) && stroke.duration > 0) {
-    return stroke.duration;
-  }
   const lastPoint = stroke.points[stroke.points.length - 1];
   return Math.max(350, lastPoint ? lastPoint.time : 350);
 }
@@ -239,11 +232,6 @@ function stopStroke(stroke, endProgress) {
 }
 
 function updatePlayback(delta) {
-  if (timelinePlaying) {
-    updateTimeline(delta);
-    return;
-  }
-
   let changed = false;
   let needsRender = false;
 
@@ -290,56 +278,6 @@ function animationLoop(now) {
   requestAnimationFrame(animationLoop);
 }
 
-function timelineSchedule() {
-  let cursor = 0;
-  return strokes.map((stroke) => {
-    const delay = Math.max(0, Number(stroke.delay) || 0);
-    const duration = strokeDuration(stroke);
-    const start = cursor + delay;
-    const end = start + duration;
-    cursor = end;
-    return { stroke, start, end, duration };
-  });
-}
-
-function updateTimeline(delta) {
-  const schedule = timelineSchedule();
-  if (!schedule.length) {
-    timelinePlaying = false;
-    updateGlobalControls();
-    return;
-  }
-
-  timelineTime += delta * globalSpeed;
-  let needsRender = false;
-  const total = schedule[schedule.length - 1].end;
-
-  for (const { stroke, start, end, duration } of schedule) {
-    const wasPlaying = stroke.playing;
-    if (timelineTime < start) {
-      stroke.progress = 0;
-      stroke.playing = false;
-    } else if (timelineTime >= end) {
-      stroke.progress = 1;
-      stroke.playing = false;
-    } else {
-      stroke.progress = Math.max(0, Math.min(1, (timelineTime - start) / duration));
-      stroke.playing = true;
-      stroke.direction = 1;
-    }
-    if (wasPlaying !== stroke.playing) needsRender = true;
-  }
-
-  if (timelineTime >= total) {
-    timelinePlaying = false;
-    for (const stroke of strokes) stroke.playing = false;
-    needsRender = true;
-  }
-
-  drawScene();
-  needsRender ? renderStrokeList() : updateProgressBars();
-}
-
 function renderStrokeList() {
   strokeList.innerHTML = "";
   emptyState.hidden = strokes.length > 0;
@@ -381,7 +319,6 @@ function renderStrokeList() {
     progressTrack.innerHTML = `<div class="progressFill" data-stroke-id="${stroke.id}" style="transform:scaleX(${stroke.progress})"></div>`;
 
     item.append(title, controls);
-    item.append(timingPanel(stroke));
     if (stroke.speedOpen) {
       item.append(speedPanel(stroke));
     }
@@ -396,16 +333,13 @@ function updateGlobalControls() {
   backAllButton.disabled = disabled;
   loopAllButton.disabled = disabled;
   speedAllButton.disabled = disabled;
-  sequenceAllButton.disabled = disabled;
 
   const allPlayingForward = strokes.length > 0 && strokes.every((stroke) => stroke.playing && stroke.direction === 1);
   const allPlayingBackward = strokes.length > 0 && strokes.every((stroke) => stroke.playing && stroke.direction === -1);
-  setIconButton(playAllButton, allPlayingForward && !timelinePlaying ? "pause" : "play", allPlayingForward && !timelinePlaying ? "Pause all strokes" : "Play all strokes");
+  setIconButton(playAllButton, allPlayingForward ? "pause" : "play", allPlayingForward ? "Pause all strokes" : "Play all strokes");
   setIconButton(backAllButton, allPlayingBackward ? "pause" : "reverse", allPlayingBackward ? "Pause all strokes" : "Reverse all strokes");
   setIconButton(loopAllButton, "loop", globalLoop ? "Loop all strokes on" : "Loop all strokes");
-  setIconButton(sequenceAllButton, timelinePlaying ? "pause" : "sequence", timelinePlaying ? "Pause sequence" : "Play sequence");
   loopAllButton.classList.toggle("primary", globalLoop);
-  sequenceAllButton.classList.toggle("primary", timelinePlaying);
   setIconButton(speedAllButton, `${formatSpeed(globalSpeed)}x`, `Speed ${formatSpeed(globalSpeed)}x`);
   globalSpeedLabel.textContent = `${formatSpeed(globalSpeed)}x`;
   globalSpeedValue.textContent = `${formatSpeed(globalSpeed)}x`;
@@ -426,11 +360,6 @@ function gradientPreview(colors) {
 
 function formatSpeed(speed) {
   return Number.isInteger(speed) ? String(speed) : speed.toFixed(2).replace(/0$/, "");
-}
-
-function formatSeconds(ms) {
-  const seconds = ms / 1000;
-  return `${Number.isInteger(seconds) ? seconds : seconds.toFixed(2).replace(/0$/, "")}s`;
 }
 
 function speedPanel(stroke) {
@@ -455,37 +384,6 @@ function speedPanel(stroke) {
   return panel;
 }
 
-function timingPanel(stroke) {
-  const panel = document.createElement("div");
-  panel.className = "timingPanel";
-  panel.innerHTML = `
-    <label>
-      <span>Delay</span>
-      <input type="range" min="0" max="5" step="0.1" value="${(stroke.delay || 0) / 1000}" aria-label="Delay for Stroke ${stroke.id}">
-      <em>${formatSeconds(stroke.delay || 0)}</em>
-    </label>
-    <label>
-      <span>Duration</span>
-      <input type="range" min="0.25" max="10" step="0.25" value="${strokeDuration(stroke) / 1000}" aria-label="Duration for Stroke ${stroke.id}">
-      <em>${formatSeconds(strokeDuration(stroke))}</em>
-    </label>
-  `;
-
-  const [delayInput, durationInput] = panel.querySelectorAll("input");
-  const [delayValue, durationValue] = panel.querySelectorAll("em");
-
-  delayInput.addEventListener("input", () => {
-    stroke.delay = Number(delayInput.value) * 1000;
-    delayValue.textContent = formatSeconds(stroke.delay);
-  });
-  durationInput.addEventListener("input", () => {
-    stroke.duration = Number(durationInput.value) * 1000;
-    durationValue.textContent = formatSeconds(stroke.duration);
-  });
-
-  return panel;
-}
-
 function controlButton(label, icon, onClick, primary, extraClass) {
   const button = document.createElement("button");
   button.type = "button";
@@ -500,7 +398,6 @@ function controlButton(label, icon, onClick, primary, extraClass) {
 }
 
 function playStroke(stroke, direction) {
-  stopTimeline();
   if (stroke.playing && stroke.direction === direction) {
     stroke.playing = false;
   } else {
@@ -530,7 +427,6 @@ function toggleSpeed(stroke) {
 }
 
 function deleteStroke(stroke) {
-  stopTimeline();
   strokes = strokes.filter((item) => item !== stroke);
   drawScene();
   renderStrokeList();
@@ -570,8 +466,6 @@ function projectSnapshot() {
       direction: stroke.direction,
       loop: stroke.loop,
       speed: stroke.speed,
-      delay: stroke.delay,
-      duration: stroke.duration,
       progress: stroke.progress
     }))
   };
@@ -624,8 +518,6 @@ function normalizeSavedStroke(stroke) {
     direction: stroke.direction === -1 ? -1 : 1,
     loop: Boolean(stroke.loop),
     speed: Number(stroke.speed) || 1,
-    delay: Math.max(0, Number(stroke.delay) || 0),
-    duration: Number(stroke.duration) > 0 ? Number(stroke.duration) : undefined,
     speedOpen: false,
     progress: Math.max(0, Math.min(1, Number.isFinite(stroke.progress) ? stroke.progress : 1))
   };
@@ -669,7 +561,6 @@ function restoreProject(silent = false) {
 }
 
 function playAll(direction) {
-  stopTimeline();
   const allPlayingDirection = strokes.length > 0 && strokes.every((stroke) => stroke.playing && stroke.direction === direction);
 
   for (const stroke of strokes) {
@@ -687,39 +578,12 @@ function playAll(direction) {
 }
 
 function toggleLoopAll() {
-  stopTimeline();
   globalLoop = !globalLoop;
   for (const stroke of strokes) {
     stroke.loop = globalLoop;
     if (!stroke.loop && stroke.progress <= 0) stopStroke(stroke, 0);
     if (!stroke.loop && stroke.progress >= 1) stopStroke(stroke, 1);
   }
-  renderStrokeList();
-}
-
-function stopTimeline() {
-  if (!timelinePlaying) return;
-  timelinePlaying = false;
-  for (const stroke of strokes) {
-    stroke.playing = false;
-  }
-}
-
-function toggleSequencePlayback() {
-  if (timelinePlaying) {
-    stopTimeline();
-    renderStrokeList();
-    return;
-  }
-
-  timelineTime = 0;
-  for (const stroke of strokes) {
-    stroke.progress = 0;
-    stroke.playing = false;
-    stroke.direction = 1;
-  }
-  timelinePlaying = true;
-  drawScene();
   renderStrokeList();
 }
 
@@ -785,8 +649,6 @@ function beginStroke(event) {
     direction: 1,
     loop: globalLoop,
     speed: globalSpeed,
-    delay: 0,
-    duration: undefined,
     speedOpen: false,
     progress: 1
   };
@@ -803,7 +665,6 @@ function endStroke(event) {
 
   if (currentStroke.points.length > 1) {
     currentStroke.points = normalizeTime(currentStroke.points);
-    currentStroke.duration = strokeDuration(currentStroke);
     strokes.push(currentStroke);
     nextId += 1;
   }
@@ -822,14 +683,12 @@ canvas.addEventListener("pointerup", endStroke);
 canvas.addEventListener("pointercancel", endStroke);
 
 undoButton.addEventListener("click", () => {
-  stopTimeline();
   strokes.pop();
   drawScene();
   renderStrokeList();
 });
 
 clearButton.addEventListener("click", () => {
-  stopTimeline();
   strokes = [];
   currentStroke = null;
   drawScene();
@@ -860,7 +719,6 @@ addGradientColor.addEventListener("click", () => {
 playAllButton.addEventListener("click", () => playAll(1));
 backAllButton.addEventListener("click", () => playAll(-1));
 loopAllButton.addEventListener("click", toggleLoopAll);
-sequenceAllButton.addEventListener("click", toggleSequencePlayback);
 speedAllButton.addEventListener("click", () => {
   globalSpeedPanel.hidden = !globalSpeedPanel.hidden;
 });

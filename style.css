@@ -442,32 +442,6 @@ input[type="range"] {
   text-align: right;
 }
 
-.timingPanel {
-  display: grid;
-  gap: 8px;
-  border-radius: 16px;
-  background: rgba(255, 248, 234, 0.48);
-  padding: 9px;
-}
-
-.timingPanel label {
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr) 36px;
-  align-items: center;
-  gap: 8px;
-}
-
-.timingPanel span,
-.timingPanel em {
-  color: var(--muted);
-  font-size: 12px;
-  font-style: normal;
-}
-
-.timingPanel input[type="range"] {
-  width: 100%;
-}
-
 .workArea {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 332px;
