@@ -635,21 +635,61 @@ input[type="range"] {
 .strokeItem {
   display: grid;
   gap: 10px;
+  border: 1px solid transparent;
   border-radius: 18px;
   background: rgba(255, 248, 234, 0.58);
   padding: 12px;
-  transition: background-color 160ms ease-out;
+  cursor: pointer;
+  transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out, transform 160ms ease-out;
+}
+
+.strokeItem:hover {
+  background: rgba(255, 248, 234, 0.78);
 }
 
 .strokeItem.playingStroke {
   background: rgba(255, 248, 234, 0.9);
 }
 
+.strokeItem.selectedStrokeItem {
+  border-color: rgba(23, 22, 17, 0.34);
+  background: rgba(255, 248, 234, 0.96);
+  box-shadow: 0 14px 32px rgba(23, 22, 17, 0.1);
+}
+
+.strokeItem.draggingStroke {
+  opacity: 0.72;
+  transform: scale(0.985);
+}
+
 .strokeTitle {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
+}
+
+.dragHandle {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 34px;
+  border: 1px solid rgba(23, 22, 17, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 248, 234, 0.42);
+  color: rgba(23, 22, 17, 0.78);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.strokeItem.selectedStrokeItem .dragHandle {
+  background: var(--yellow-block);
+  border-color: rgba(23, 22, 17, 0.36);
+  color: var(--ink);
 }
 
 .strokeName {
@@ -679,6 +719,7 @@ input[type="range"] {
   min-width: 34px;
   height: 34px;
   padding: 0;
+  cursor: pointer;
 }
 
 .strokeControls .svgIcon {
