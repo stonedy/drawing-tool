@@ -45,6 +45,7 @@ let timelineTime = 0;
 let selectedStrokeId = null;
 let draggedStrokeId = null;
 let pointerSorting = false;
+let sortStartPoint = null;
 
 const STORAGE_KEY = "stroke-replay-project-v1";
 
@@ -471,15 +472,14 @@ function renderStrokeList() {
     const item = document.createElement("section");
     item.className = `strokeItem${stroke.visible ? "" : " hiddenStroke"}${stroke.playing ? " playingStroke" : ""}${stroke.id === selectedStrokeId ? " selectedStrokeItem" : ""}${stroke.id === draggedStrokeId ? " draggingStroke" : ""}`;
     item.dataset.strokeId = String(stroke.id);
-    item.draggable = true;
     item.setAttribute("aria-selected", String(stroke.id === selectedStrokeId));
 
     const title = document.createElement("div");
     title.className = "strokeTitle";
     title.innerHTML = `
-      <span class="dragHandle" title="Drag to reorder" aria-label="Playback order ${orderLabel(index + 1)}">
+      <button class="dragHandle" type="button" title="Drag to reorder" aria-label="Drag Stroke ${stroke.id} to reorder. Playback order ${orderLabel(index + 1)}">
         <span>${orderLabel(index + 1)}</span>
-      </span>
+      </button>
       <div class="strokeName">
         <span class="swatch" style="background:${stroke.gradient ? gradientPreview(stroke.colors) : stroke.color}"></span>
         <span>Stroke ${stroke.id}</span>
@@ -508,7 +508,9 @@ function renderStrokeList() {
     const dragHandle = title.querySelector(".dragHandle");
     dragHandle.addEventListener("pointerdown", (event) => {
       event.preventDefault();
+      event.stopPropagation();
       pointerSorting = true;
+      sortStartPoint = { x: event.clientX, y: event.clientY };
       draggedStrokeId = stroke.id;
       selectedStrokeId = stroke.id;
       drawScene();
@@ -518,29 +520,6 @@ function renderStrokeList() {
     item.addEventListener("click", (event) => {
       if (event.target.closest("button, input, label")) return;
       selectStroke(stroke.id, false);
-    });
-    item.addEventListener("dragstart", (event) => {
-      draggedStrokeId = stroke.id;
-      selectedStrokeId = stroke.id;
-      drawScene();
-      item.classList.add("draggingStroke");
-      event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("text/plain", String(stroke.id));
-    });
-    item.addEventListener("dragend", () => {
-      if (!pointerSorting) draggedStrokeId = null;
-      renderStrokeList();
-    });
-    item.addEventListener("dragover", (event) => {
-      event.preventDefault();
-      if (!draggedStrokeId || draggedStrokeId === stroke.id) return;
-      const rect = item.getBoundingClientRect();
-      reorderStroke(draggedStrokeId, stroke.id, event.clientY > rect.top + rect.height / 2);
-    });
-    item.addEventListener("drop", (event) => {
-      event.preventDefault();
-      draggedStrokeId = null;
-      renderStrokeList();
     });
     strokeList.append(item);
   }
@@ -611,6 +590,11 @@ function timingPanel(stroke) {
 
   const [delayInput, durationInput] = panel.querySelectorAll("input");
   const [delayValue, durationValue] = panel.querySelectorAll("em");
+
+  for (const input of [delayInput, durationInput]) {
+    input.addEventListener("pointerdown", (event) => event.stopPropagation());
+    input.addEventListener("click", (event) => event.stopPropagation());
+  }
 
   delayInput.addEventListener("input", () => {
     stroke.delay = Number(delayInput.value) * 1000;
@@ -841,6 +825,8 @@ function reorderStroke(draggedId, targetId, insertAfter = false) {
 
 function handlePointerSortMove(event) {
   if (!pointerSorting || !draggedStrokeId) return;
+  if (sortStartPoint && Math.hypot(event.clientX - sortStartPoint.x, event.clientY - sortStartPoint.y) < 6) return;
+
   const target = document.elementFromPoint(event.clientX, event.clientY)?.closest(".strokeItem");
   if (!target || !strokeList.contains(target)) return;
 
@@ -854,6 +840,7 @@ function handlePointerSortMove(event) {
 function stopPointerSort() {
   if (!pointerSorting) return;
   pointerSorting = false;
+  sortStartPoint = null;
   draggedStrokeId = null;
   renderStrokeList();
 }
