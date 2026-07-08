@@ -514,6 +514,7 @@ function renderStrokeList() {
       sortStartPoint = { x: event.clientX, y: event.clientY };
       draggedStrokeId = stroke.id;
       selectedStrokeId = stroke.id;
+      strokeList.classList.add("sortingStrokeList");
       drawScene();
       item.classList.add("draggingStroke");
     });
@@ -844,6 +845,7 @@ function stopPointerSort() {
   pointerSorting = false;
   sortStartPoint = null;
   draggedStrokeId = null;
+  strokeList.classList.remove("sortingStrokeList");
   renderStrokeList();
 }
 

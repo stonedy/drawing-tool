@@ -640,7 +640,8 @@ input[type="range"] {
   background: rgba(255, 248, 234, 0.58);
   padding: 12px;
   cursor: pointer;
-  transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out, transform 160ms ease-out;
+  transform: none;
+  transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out, transform 160ms ease-out;
 }
 
 .strokeItem:hover {
@@ -648,18 +649,29 @@ input[type="range"] {
 }
 
 .strokeItem.playingStroke {
-  background: rgba(255, 248, 234, 0.9);
+  border-color: rgba(37, 99, 235, 0.28);
+  background: rgba(255, 248, 234, 0.88);
+  transform: none;
 }
 
 .strokeItem.selectedStrokeItem {
   border-color: rgba(23, 22, 17, 0.34);
   background: rgba(255, 248, 234, 0.96);
-  box-shadow: 0 14px 32px rgba(23, 22, 17, 0.1);
+  box-shadow: 0 6px 8px rgba(23, 22, 17, 0.08);
+}
+
+.sortingStrokeList .strokeItem:not(.draggingStroke) {
+  opacity: 0.62;
 }
 
 .strokeItem.draggingStroke {
-  opacity: 0.72;
-  transform: scale(0.985);
+  position: relative;
+  z-index: 2;
+  opacity: 0.98;
+  border-color: rgba(23, 22, 17, 0.42);
+  background: rgba(255, 248, 234, 0.98);
+  box-shadow: 0 8px 8px rgba(23, 22, 17, 0.16);
+  transform: translateY(-4px) scale(1.018);
 }
 
 .strokeTitle {
@@ -694,10 +706,10 @@ input[type="range"] {
 .dragHandle:hover {
   border-color: rgba(23, 22, 17, 0.42);
   background: rgba(255, 248, 234, 0.86);
-  transform: translateY(-1px);
 }
 
-.dragHandle:active {
+.dragHandle:active,
+.strokeItem.draggingStroke .dragHandle {
   cursor: grabbing;
 }
 
