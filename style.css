@@ -664,22 +664,24 @@ input[type="range"] {
 
 .strokeTitle {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
+  grid-template-columns: 62px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
 }
 
 .dragHandle {
-  display: inline-grid;
+  display: grid;
+  grid-template-columns: auto 14px;
   place-items: center;
-  width: 42px;
-  min-width: 42px;
-  height: 34px;
-  padding: 0;
-  border: 1px solid rgba(23, 22, 17, 0.2);
-  border-radius: 999px;
-  background: rgba(255, 248, 234, 0.42);
-  color: rgba(23, 22, 17, 0.78);
+  column-gap: 7px;
+  width: 56px;
+  min-width: 56px;
+  height: 38px;
+  padding: 0 8px;
+  border: 1px solid rgba(23, 22, 17, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 248, 234, 0.54);
+  color: rgba(23, 22, 17, 0.8);
   cursor: grab;
   white-space: normal;
   touch-action: none;
@@ -689,13 +691,39 @@ input[type="range"] {
   line-height: 1;
 }
 
+.dragHandle:hover {
+  border-color: rgba(23, 22, 17, 0.42);
+  background: rgba(255, 248, 234, 0.86);
+  transform: translateY(-1px);
+}
+
 .dragHandle:active {
   cursor: grabbing;
 }
 
-.strokeItem.selectedStrokeItem .dragHandle {
+.orderNumber {
+  min-width: 2ch;
+}
+
+.gripDots {
+  display: grid;
+  grid-template-columns: repeat(2, 4px);
+  gap: 3px 4px;
+}
+
+.gripDots i {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.strokeItem.selectedStrokeItem .dragHandle,
+.strokeItem.draggingStroke .dragHandle {
   background: var(--yellow-block);
-  border-color: rgba(23, 22, 17, 0.36);
+  border-color: rgba(23, 22, 17, 0.42);
   color: var(--ink);
 }
 

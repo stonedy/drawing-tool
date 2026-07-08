@@ -478,7 +478,8 @@ function renderStrokeList() {
     title.className = "strokeTitle";
     title.innerHTML = `
       <button class="dragHandle" type="button" title="Drag to reorder" aria-label="Drag Stroke ${stroke.id} to reorder. Playback order ${orderLabel(index + 1)}">
-        <span>${orderLabel(index + 1)}</span>
+        <span class="orderNumber">${orderLabel(index + 1)}</span>
+        <span class="gripDots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
       </button>
       <div class="strokeName">
         <span class="swatch" style="background:${stroke.gradient ? gradientPreview(stroke.colors) : stroke.color}"></span>
@@ -811,30 +812,31 @@ function playAll(direction) {
   renderStrokeList();
 }
 
-function reorderStroke(draggedId, targetId, insertAfter = false) {
+function reorderStrokeToIndex(draggedId, insertIndex) {
   const fromIndex = strokes.findIndex((stroke) => stroke.id === draggedId);
-  const targetIndex = strokes.findIndex((stroke) => stroke.id === targetId);
-  if (fromIndex < 0 || targetIndex < 0 || fromIndex === targetIndex) return;
+  if (fromIndex < 0) return;
 
   const [moved] = strokes.splice(fromIndex, 1);
-  let insertIndex = strokes.findIndex((stroke) => stroke.id === targetId);
-  if (insertAfter) insertIndex += 1;
-  strokes.splice(insertIndex, 0, moved);
+  const safeIndex = Math.max(0, Math.min(strokes.length, insertIndex));
+  strokes.splice(safeIndex, 0, moved);
   renderStrokeList();
+}
+
+function sortIndexFromPointerY(clientY) {
+  const items = [...strokeList.querySelectorAll(".strokeItem")].filter((item) => Number(item.dataset.strokeId) !== draggedStrokeId);
+  for (let index = 0; index < items.length; index += 1) {
+    const rect = items[index].getBoundingClientRect();
+    if (clientY < rect.top + rect.height / 2) return index;
+  }
+  return items.length;
 }
 
 function handlePointerSortMove(event) {
   if (!pointerSorting || !draggedStrokeId) return;
   if (sortStartPoint && Math.hypot(event.clientX - sortStartPoint.x, event.clientY - sortStartPoint.y) < 6) return;
+  event.preventDefault();
 
-  const target = document.elementFromPoint(event.clientX, event.clientY)?.closest(".strokeItem");
-  if (!target || !strokeList.contains(target)) return;
-
-  const targetId = Number(target.dataset.strokeId);
-  if (!targetId || targetId === draggedStrokeId) return;
-
-  const rect = target.getBoundingClientRect();
-  reorderStroke(draggedStrokeId, targetId, event.clientY > rect.top + rect.height / 2);
+  reorderStrokeToIndex(draggedStrokeId, sortIndexFromPointerY(event.clientY));
 }
 
 function stopPointerSort() {
