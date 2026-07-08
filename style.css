@@ -599,9 +599,6 @@ input[type="range"] {
   min-height: 0;
 }
 
-.app.expanded .extendButton span {
-  transform: rotate(180deg);
-}
 
 .sidebar {
   display: grid;
