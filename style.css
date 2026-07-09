@@ -1,18 +1,21 @@
 :root {
   color-scheme: light;
-  --bg: #ded5c6;
-  --paper: #eadbc8;
-  --panel: #fff8ea;
-  --panel-soft: rgba(255, 248, 234, 0.72);
-  --ink: #171611;
-  --muted: rgba(23, 22, 17, 0.66);
-  --line: rgba(23, 22, 17, 0.16);
-  --line-strong: rgba(23, 22, 17, 0.26);
-  --blue-block: #8fb9ff;
-  --yellow-block: #f2d66d;
-  --danger: #a13a2f;
-  --accent: #2563eb;
-  --accent-strong: #1749b8;
+  --bg: #dce9f5;
+  --paper: #f2f7fb;
+  --panel: #fbfcf7;
+  --panel-soft: rgba(251, 252, 247, 0.72);
+  --ink: #182235;
+  --muted: rgba(24, 34, 53, 0.62);
+  --line: rgba(24, 34, 53, 0.13);
+  --line-strong: rgba(24, 34, 53, 0.24);
+  --blue-block: #78aeea;
+  --yellow-block: #e6f0f7;
+  --danger: #b6474d;
+  --accent: #1e5fae;
+  --accent-strong: #143f79;
+  --accent-soft: #cfe2f5;
+  --warm-accent: #ef8d7d;
+  --shadow: rgba(34, 54, 86, 0.14);
 }
 
 * {
@@ -27,7 +30,9 @@ body {
   margin: 0;
   min-height: 100svh;
   overflow-x: hidden;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.74), transparent 30%),
+    linear-gradient(135deg, #edf5fb 0%, var(--bg) 48%, #f9f6ee 100%);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -71,7 +76,7 @@ button {
 
 button:hover {
   border-color: var(--accent);
-  background: rgba(255, 248, 234, 0.94);
+  background: rgba(251, 252, 247, 0.94);
 }
 
 button:active {
@@ -109,13 +114,13 @@ button:disabled {
 
 .app {
   display: grid;
-  grid-template-columns: 285px minmax(0, 1fr);
+  grid-template-columns: 250px minmax(0, 1fr);
   gap: 20px;
   height: 100svh;
   min-height: 100svh;
   overflow: hidden;
-  padding: 20px;
-  background: var(--paper);
+  padding: 18px;
+  background: transparent;
   transition: grid-template-columns 420ms cubic-bezier(.22, 1, .36, 1);
 }
 
@@ -125,8 +130,10 @@ button:disabled {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  border-radius: 26px;
-  background: rgba(255, 248, 234, 0.56);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(251, 252, 247, 0.78), rgba(222, 236, 247, 0.74));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
   padding: 24px;
   transition: padding 420ms cubic-bezier(.22, 1, .36, 1);
 }
@@ -159,9 +166,12 @@ button:disabled {
   grid-template-columns: minmax(170px, 0.24fr) minmax(0, 1fr);
   align-items: end;
   gap: 18px;
-  min-height: 148px;
+  min-height: 138px;
   border-radius: 28px;
-  background: var(--blue-block);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.24), transparent 38%),
+    linear-gradient(135deg, #6fa7e7 0%, #78aeea 52%, #a9c8ec 100%);
+  box-shadow: 0 16px 36px rgba(44, 87, 134, 0.16);
   padding: 22px;
   transition: min-height 420ms cubic-bezier(.22, 1, .36, 1), padding 420ms cubic-bezier(.22, 1, .36, 1);
 }
@@ -190,7 +200,7 @@ button:disabled {
 
 .instrumentPanel {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(250px, 1fr) minmax(110px, 0.42fr) minmax(170px, 0.58fr);
+  grid-template-columns: minmax(188px, 0.92fr) minmax(268px, 1.12fr) minmax(102px, 0.42fr) minmax(156px, 0.56fr);
   align-items: stretch;
   gap: 12px;
 }
@@ -202,10 +212,12 @@ button:disabled {
   align-content: end;
   gap: 10px;
   min-width: 0;
-  min-height: 126px;
+  min-height: 116px;
   border: 0;
   border-radius: 22px;
-  background: rgba(255, 248, 234, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(251, 252, 247, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
   padding: 14px;
 }
 
@@ -214,7 +226,7 @@ button:disabled {
   display: block;
   padding: 0;
   border: 0;
-  color: rgba(23, 22, 17, 0.78);
+  color: rgba(24, 34, 53, 0.78);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0;
@@ -237,10 +249,10 @@ button:disabled {
   position: relative;
   display: inline-grid;
   place-items: center;
-  flex: 0 0 42px;
-  width: 42px;
-  min-width: 42px;
-  height: 42px;
+  flex: 0 0 40px;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
   padding: 0;
   border-radius: 999px;
   font-size: 18px;
@@ -330,10 +342,10 @@ input[type="range"] {
   align-items: center;
   gap: 8px;
   grid-column: 1 / -1;
-  min-height: 42px;
-  border: 1px solid rgba(23, 22, 17, 0.14);
+  min-height: 40px;
+  border: 1px solid rgba(24, 34, 53, 0.14);
   border-radius: 18px;
-  background: rgba(255, 248, 234, 0.52);
+  background: rgba(251, 252, 247, 0.52);
   padding: 5px;
 }
 
@@ -342,9 +354,9 @@ input[type="range"] {
   grid-template-columns: minmax(0, 1fr) 26px;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(23, 22, 17, 0.14);
+  border: 1px solid rgba(24, 34, 53, 0.14);
   border-radius: 18px;
-  background: rgba(255, 248, 234, 0.52);
+  background: rgba(251, 252, 247, 0.52);
   padding: 8px 10px;
 }
 
@@ -430,7 +442,7 @@ input[type="range"] {
   gap: 10px;
   border: 1px solid var(--line-strong);
   border-radius: 18px;
-  background: rgba(255, 248, 234, 0.52);
+  background: rgba(251, 252, 247, 0.52);
   padding: 8px 10px;
 }
 
@@ -444,17 +456,18 @@ input[type="range"] {
 
 .timingPanel {
   display: grid;
-  gap: 8px;
-  border-radius: 16px;
-  background: rgba(255, 248, 234, 0.48);
-  padding: 9px;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  border-radius: 14px;
+  background: rgba(251, 252, 247, 0.48);
+  padding: 7px;
 }
 
 .timingPanel label {
   display: grid;
-  grid-template-columns: 52px minmax(0, 1fr) 36px;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 8px;
+  gap: 4px 6px;
 }
 
 .timingPanel span,
@@ -465,12 +478,13 @@ input[type="range"] {
 }
 
 .timingPanel input[type="range"] {
+  grid-column: 1 / -1;
   width: 100%;
 }
 
 .workArea {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 332px;
+  grid-template-columns: minmax(0, 1fr) 306px;
   gap: 18px;
   min-height: 0;
   overflow: hidden;
@@ -490,8 +504,10 @@ input[type="range"] {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  border-radius: 28px;
+  border: 1px solid rgba(24, 34, 53, 0.12);
+  border-radius: 30px;
   background: var(--panel);
+  box-shadow: 0 18px 42px rgba(35, 60, 92, 0.12);
   transition: min-height 420ms cubic-bezier(.22, 1, .36, 1);
 }
 
@@ -501,7 +517,7 @@ input[type="range"] {
   height: 100%;
   min-height: 0;
   border: 0;
-  background: #fff8ea;
+  background: #fbfcf7;
   touch-action: none;
   cursor: crosshair;
   transition: min-height 420ms cubic-bezier(.22, 1, .36, 1);
@@ -514,8 +530,8 @@ input[type="range"] {
   width: 54px;
   height: 54px;
   min-height: 54px;
-  border-color: rgba(23, 22, 17, 0.22);
-  background: rgba(255, 248, 234, 0.58);
+  border-color: rgba(24, 34, 53, 0.22);
+  background: rgba(251, 252, 247, 0.58);
   backdrop-filter: blur(10px);
   padding: 0;
 }
@@ -551,7 +567,7 @@ input[type="range"] {
 }
 
 .app.expanded {
-  grid-template-columns: 118px minmax(0, 1fr);
+  grid-template-columns: 92px minmax(0, 1fr);
 }
 
 .app.expanded .titleRail {
@@ -571,8 +587,8 @@ input[type="range"] {
 }
 
 .app.expanded .topbar {
-  min-height: 84px;
-  grid-template-columns: minmax(140px, 0.18fr) minmax(0, 1fr);
+  min-height: 78px;
+  grid-template-columns: minmax(112px, 0.14fr) minmax(0, 1fr);
   padding: 14px 16px;
 }
 
@@ -591,7 +607,7 @@ input[type="range"] {
 }
 
 .app.expanded .workArea {
-  grid-template-columns: minmax(0, 1.18fr) 390px;
+  grid-template-columns: minmax(0, 1fr) 228px;
 }
 
 .app.expanded .canvasShell,
@@ -603,13 +619,17 @@ input[type="range"] {
 .sidebar {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 14px;
+  gap: 12px;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  border-radius: 28px;
-  background: var(--yellow-block);
-  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(251, 252, 247, 0.46), rgba(230, 240, 247, 0.9)),
+    var(--yellow-block);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  padding: 14px;
 }
 
 .sidebarHeader {
@@ -631,30 +651,30 @@ input[type="range"] {
 
 .strokeItem {
   display: grid;
-  gap: 10px;
-  border: 1px solid transparent;
+  gap: 8px;
+  border: 1px solid rgba(24, 34, 53, 0.08);
   border-radius: 18px;
-  background: rgba(255, 248, 234, 0.58);
-  padding: 12px;
+  background: rgba(251, 252, 247, 0.68);
+  padding: 9px;
   cursor: pointer;
   transform: none;
   transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out, opacity 160ms ease-out, transform 160ms ease-out;
 }
 
 .strokeItem:hover {
-  background: rgba(255, 248, 234, 0.78);
+  background: rgba(251, 252, 247, 0.86);
 }
 
 .strokeItem.playingStroke {
-  border-color: rgba(37, 99, 235, 0.28);
-  background: rgba(255, 248, 234, 0.88);
+  border-color: rgba(30, 95, 174, 0.28);
+  background: rgba(251, 252, 247, 0.92);
   transform: none;
 }
 
 .strokeItem.selectedStrokeItem {
-  border-color: rgba(23, 22, 17, 0.34);
-  background: rgba(255, 248, 234, 0.96);
-  box-shadow: 0 6px 8px rgba(23, 22, 17, 0.08);
+  border-color: rgba(30, 95, 174, 0.38);
+  background: rgba(251, 252, 247, 0.98);
+  box-shadow: 0 8px 18px var(--shadow);
 }
 
 .sortingStrokeList .strokeItem:not(.draggingStroke) {
@@ -665,15 +685,15 @@ input[type="range"] {
   position: relative;
   z-index: 2;
   opacity: 0.98;
-  border-color: rgba(23, 22, 17, 0.42);
-  background: rgba(255, 248, 234, 0.98);
-  box-shadow: 0 8px 8px rgba(23, 22, 17, 0.16);
+  border-color: rgba(30, 95, 174, 0.44);
+  background: rgba(251, 252, 247, 0.98);
+  box-shadow: 0 16px 26px rgba(34, 54, 86, 0.18);
   transform: translateY(-4px) scale(1.018);
 }
 
 .strokeTitle {
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr) auto;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
 }
@@ -683,14 +703,14 @@ input[type="range"] {
   grid-template-columns: auto 14px;
   place-items: center;
   column-gap: 7px;
-  width: 56px;
-  min-width: 56px;
-  height: 38px;
+  width: 52px;
+  min-width: 52px;
+  height: 34px;
   padding: 0 8px;
-  border: 1px solid rgba(23, 22, 17, 0.24);
+  border: 1px solid rgba(24, 34, 53, 0.24);
   border-radius: 14px;
-  background: rgba(255, 248, 234, 0.54);
-  color: rgba(23, 22, 17, 0.8);
+  background: rgba(251, 252, 247, 0.54);
+  color: rgba(24, 34, 53, 0.8);
   cursor: grab;
   white-space: normal;
   touch-action: none;
@@ -701,8 +721,8 @@ input[type="range"] {
 }
 
 .dragHandle:hover {
-  border-color: rgba(23, 22, 17, 0.42);
-  background: rgba(255, 248, 234, 0.86);
+  border-color: rgba(24, 34, 53, 0.42);
+  background: rgba(251, 252, 247, 0.86);
 }
 
 .dragHandle:active,
@@ -731,8 +751,8 @@ input[type="range"] {
 
 .strokeItem.selectedStrokeItem .dragHandle,
 .strokeItem.draggingStroke .dragHandle {
-  background: var(--yellow-block);
-  border-color: rgba(23, 22, 17, 0.42);
+  background: var(--accent-soft);
+  border-color: rgba(30, 95, 174, 0.42);
   color: var(--ink);
 }
 
@@ -753,29 +773,29 @@ input[type="range"] {
 
 .strokeControls {
   display: grid;
-  grid-template-columns: repeat(5, 34px);
+  grid-template-columns: repeat(5, 30px);
   justify-content: start;
   gap: 7px;
 }
 
 .strokeControls button {
-  width: 34px;
-  min-width: 34px;
-  height: 34px;
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
   padding: 0;
   cursor: pointer;
 }
 
 .strokeControls .svgIcon {
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
 }
 
 .progressTrack {
-  height: 6px;
+  height: 4px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 248, 234, 0.5);
+  background: rgba(251, 252, 247, 0.58);
 }
 
 .progressFill {
@@ -806,7 +826,7 @@ input[type="range"] {
   display: grid;
   gap: 10px;
   border-radius: 18px;
-  background: rgba(255, 248, 234, 0.58);
+  background: rgba(251, 252, 247, 0.58);
   padding: 12px;
 }
 
@@ -838,7 +858,7 @@ input[type="range"] {
 .previewStrokeLine {
   height: 6px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #ff4d4d, #c244ff 68%, rgba(255, 248, 234, 0.72) 68%);
+  background: linear-gradient(90deg, #ff4d4d, #c244ff 68%, rgba(251, 252, 247, 0.72) 68%);
 }
 
 .previewStrokeButtons {
@@ -854,6 +874,82 @@ input[type="range"] {
   background: var(--panel-soft);
 }
 
+
+.app.expanded .instrumentPanel {
+  grid-template-columns: minmax(168px, 0.9fr) minmax(238px, 1fr) minmax(88px, 0.36fr) minmax(138px, 0.48fr);
+}
+
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  min-height: 50px;
+  grid-template-rows: auto;
+  grid-template-columns: auto minmax(0, auto);
+  align-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.app.expanded .toolGroupLabel,
+.app.expanded .globalHeader h2 {
+  font-size: 11px;
+}
+
+.app.expanded .globalHeader {
+  display: grid;
+  gap: 2px;
+}
+
+.app.expanded .iconButton {
+  flex-basis: 34px;
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+}
+
+.app.expanded .svgIcon {
+  width: 17px;
+  height: 17px;
+}
+
+.app.expanded .sidebar {
+  padding: 12px;
+}
+
+.app.expanded .sidebarHeader h2 {
+  font-size: 18px;
+}
+
+.app.expanded .strokeItem {
+  gap: 6px;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.app.expanded .strokeTitle {
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.app.expanded .dragHandle {
+  width: 44px;
+  min-width: 44px;
+  height: 32px;
+  grid-template-columns: auto 12px;
+  column-gap: 5px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+.app.expanded .strokeMeta,
+.app.expanded .strokeControls,
+.app.expanded .timingPanel,
+.app.expanded .progressTrack {
+  display: none !important;
+}
+
+.app.expanded .strokeName span:last-child {
+  font-size: 13px;
+}
 @media (max-width: 1100px) {
   .app,
   .app.expanded {
@@ -936,7 +1032,7 @@ input[type="range"] {
   .toolGroupLabel {
     min-height: 24px;
     border-right: 0;
-    border-bottom: 1px solid rgba(23, 22, 17, 0.18);
+    border-bottom: 1px solid rgba(24, 34, 53, 0.18);
     padding: 0 8px;
   }
 
@@ -959,8 +1055,10 @@ input[type="range"] {
   }
 
   .strokeControls {
-    grid-template-columns: repeat(5, 34px);
-  }
+  display: grid;
+  grid-template-columns: repeat(5, 30px);
+  justify-content: start;
+  gap: 7px;
 }
 
 @media (prefers-reduced-motion: reduce) {

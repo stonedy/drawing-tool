@@ -266,7 +266,7 @@ function selectStroke(strokeId, scrollIntoView = true) {
   renderStrokeList();
 
   if (scrollIntoView) {
-    const item = strokeList.querySelector(`[data-stroke-id="${strokeId}"]`);
+    const item = strokeList.querySelector(`[data-stroke-item-id="${strokeId}"]`);
     if (item) item.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 }
