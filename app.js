@@ -471,7 +471,7 @@ function renderStrokeList() {
   for (const [index, stroke] of strokes.entries()) {
     const item = document.createElement("section");
     item.className = `strokeItem${stroke.visible ? "" : " hiddenStroke"}${stroke.playing ? " playingStroke" : ""}${stroke.id === selectedStrokeId ? " selectedStrokeItem" : ""}${stroke.id === draggedStrokeId ? " draggingStroke" : ""}`;
-    item.dataset.strokeId = String(stroke.id);
+    item.dataset.strokeItemId = String(stroke.id);
     item.setAttribute("aria-selected", String(stroke.id === selectedStrokeId));
 
     const title = document.createElement("div");
@@ -550,7 +550,7 @@ function updateGlobalControls() {
 
 function updateProgressBars() {
   for (const stroke of strokes) {
-    const fill = strokeList.querySelector(`[data-stroke-id="${stroke.id}"]`);
+    const fill = strokeList.querySelector(`.progressFill[data-stroke-id="${stroke.id}"]`);
     if (fill) {
       fill.style.transform = `scaleX(${Math.max(0, Math.min(1, stroke.progress))})`;
     }
@@ -824,7 +824,7 @@ function reorderStrokeToIndex(draggedId, insertIndex) {
 }
 
 function sortIndexFromPointerY(clientY) {
-  const items = [...strokeList.querySelectorAll(".strokeItem")].filter((item) => Number(item.dataset.strokeId) !== draggedStrokeId);
+  const items = [...strokeList.querySelectorAll(".strokeItem")].filter((item) => Number(item.dataset.strokeItemId) !== draggedStrokeId);
   for (let index = 0; index < items.length; index += 1) {
     const rect = items[index].getBoundingClientRect();
     if (clientY < rect.top + rect.height / 2) return index;

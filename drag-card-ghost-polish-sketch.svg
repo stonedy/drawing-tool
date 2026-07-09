@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660">
+  <defs>
+    <style>
+      .bg{fill:#ded5c6}.panel{fill:#eadbc8;stroke:#171611;stroke-opacity:.12}.card{fill:#fff8ea;fill-opacity:.66}.lift{fill:#fff8ea;stroke:#171611;stroke-opacity:.42}
+      .yellow{fill:#f2d66d}.blue{fill:#8fb9ff}.ink{fill:#171611}.muted{fill:#171611;fill-opacity:.58}.dash{stroke:#2563eb;stroke-width:3;stroke-dasharray:8 8}
+      .t{font:800 25px Inter,Arial,sans-serif}.s{font:500 15px Inter,Arial,sans-serif}.n{font:900 15px Inter,Arial,sans-serif}
+    </style>
+  </defs>
+  <rect class="bg" width="1100" height="660"/>
+  <text class="t ink" x="48" y="58">Card Drag Feedback Polish</text>
+  <text class="s muted" x="48" y="86">Dragging should feel like lifting a real reorderable object. Playing should feel calm.</text>
+  <g transform="translate(70 130)">
+    <rect class="panel" rx="28" width="430" height="430"/>
+    <text class="t ink" x="28" y="48">Drag state</text>
+    <text class="s muted" x="28" y="76">Dragged card lifts. Other cards visually step back.</text>
+    <rect class="card" rx="18" x="28" y="118" width="374" height="76" opacity=".55"/>
+    <rect class="lift" rx="18" x="18" y="218" width="394" height="86"/>
+    <rect class="yellow" rx="14" x="38" y="238" width="58" height="44"/>
+    <text class="n ink" x="48" y="264">02</text>
+    <circle class="ink" cx="75" cy="253" r="2"/><circle class="ink" cx="84" cy="253" r="2"/><circle class="ink" cx="75" cy="263" r="2"/><circle class="ink" cx="84" cy="263" r="2"/>
+    <rect class="blue" rx="99" x="120" y="248" width="88" height="8"/>
+    <text class="s ink" x="120" y="278">Stroke 8</text>
+    <line class="dash" x1="28" y1="328" x2="402" y2="328"/>
+    <rect class="card" rx="18" x="28" y="352" width="374" height="56" opacity=".55"/>
+  </g>
+  <g transform="translate(600 130)">
+    <rect class="panel" rx="28" width="430" height="430"/>
+    <text class="t ink" x="28" y="48">Play state</text>
+    <text class="s muted" x="28" y="76">No rotation, no flourish. Just quiet status and progress.</text>
+    <rect class="card" rx="18" x="28" y="128" width="374" height="96"/>
+    <rect class="yellow" rx="14" x="48" y="148" width="58" height="44"/>
+    <text class="n ink" x="58" y="174">01</text>
+    <rect class="blue" rx="99" x="130" y="156" width="88" height="8"/>
+    <text class="s ink" x="130" y="188">Stroke 4 playing</text>
+    <rect class="blue" rx="99" x="130" y="204" width="170" height="6"/>
+    <rect class="card" rx="18" x="28" y="250" width="374" height="76"/>
+    <rect class="card" rx="18" x="28" y="350" width="374" height="76"/>
+  </g>
+</svg>

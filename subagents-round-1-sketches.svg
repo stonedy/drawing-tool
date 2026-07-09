@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900">
+  <defs>
+    <style>
+      .bg{fill:#ded5c6}
+      .panel{fill:#eadbc8;stroke:#1b1914;stroke-opacity:.12;stroke-width:1}
+      .blue{fill:#8fb9ff}
+      .red{fill:#ff6a55}
+      .cream{fill:#fff8ea}
+      .creamSoft{fill:#fff8ea;fill-opacity:.58}
+      .yellow{fill:#f2d66d}
+      .ink{fill:#171611}
+      .muted{fill:#171611;fill-opacity:.58}
+      .line{fill:none;stroke:#171611;stroke-opacity:.16;stroke-width:1}
+      .strokeA{fill:none;stroke:#ff4d4d;stroke-width:8;stroke-linecap:round}
+      .strokeB{fill:none;stroke:#2563eb;stroke-width:8;stroke-linecap:round}
+      .strokeC{fill:none;stroke:#c244ff;stroke-width:8;stroke-linecap:round}
+      .selectedStroke{fill:none;stroke:#171611;stroke-width:13;stroke-opacity:.13;stroke-linecap:round}
+      .small{font:500 15px Inter,Arial,sans-serif}
+      .label{font:800 18px Inter,Arial,sans-serif}
+      .title{font:900 30px Inter,Arial,sans-serif}
+      .num{font:900 26px Inter,Arial,sans-serif}
+      .mono{font:700 13px Inter,Arial,sans-serif;letter-spacing:.02em}
+    </style>
+  </defs>
+  <rect class="bg" width="1500" height="900"/>
+  <text class="title ink" x="48" y="58">Subagent Round 01: Selection + Sorting + Playback Order</text>
+  <text class="small muted" x="48" y="86">Three sketches for review before implementation. No production UI changed.</text>
+
+  <g transform="translate(48 125)">
+    <rect class="panel" rx="34" width="440" height="710"/>
+    <rect class="blue" rx="26" x="22" y="22" width="396" height="82"/>
+    <text class="label ink" x="44" y="58">A. Numbered Object Cards</text>
+    <text class="small muted" x="44" y="82">Fastest MVP: drag cards, update order.</text>
+
+    <rect class="cream" rx="24" x="22" y="126" width="240" height="430"/>
+    <path class="strokeA" d="M60 235 C110 150 172 322 232 245"/>
+    <path class="strokeB" d="M66 386 C126 348 182 420 228 358"/>
+    <path class="strokeC" d="M70 475 C114 438 166 500 232 454"/>
+
+    <g transform="translate(284 126)">
+      <rect class="creamSoft" rx="20" width="134" height="102"/>
+      <text class="num ink" x="14" y="38">01</text>
+      <rect class="red" rx="99" x="58" y="22" width="52" height="8"/>
+      <circle class="ink" cx="26" cy="70" r="5"/>
+      <circle class="ink" cx="50" cy="70" r="5"/>
+      <circle class="ink" cx="74" cy="70" r="5"/>
+      <circle class="ink" cx="98" cy="70" r="5"/>
+    </g>
+    <g transform="translate(284 244)">
+      <rect class="creamSoft" rx="20" width="134" height="102"/>
+      <text class="num ink" x="14" y="38">02</text>
+      <rect class="blue" rx="99" x="58" y="22" width="52" height="8"/>
+      <circle class="ink" cx="26" cy="70" r="5"/>
+      <circle class="ink" cx="50" cy="70" r="5"/>
+      <circle class="ink" cx="74" cy="70" r="5"/>
+      <circle class="ink" cx="98" cy="70" r="5"/>
+    </g>
+    <g transform="translate(284 362)">
+      <rect class="creamSoft" rx="20" width="134" height="102"/>
+      <text class="num ink" x="14" y="38">03</text>
+      <rect class="yellow" rx="99" x="58" y="22" width="52" height="8"/>
+      <circle class="ink" cx="26" cy="70" r="5"/>
+      <circle class="ink" cx="50" cy="70" r="5"/>
+      <circle class="ink" cx="74" cy="70" r="5"/>
+      <circle class="ink" cx="98" cy="70" r="5"/>
+    </g>
+
+    <rect class="creamSoft" rx="22" x="22" y="584" width="396" height="86"/>
+    <text class="mono ink" x="44" y="619">What it proves</text>
+    <text class="small muted" x="44" y="646">Order is visible. Dragging feels simple.</text>
+  </g>
+
+  <g transform="translate(530 125)">
+    <rect class="panel" rx="34" width="440" height="710"/>
+    <rect class="red" rx="26" x="22" y="22" width="396" height="82"/>
+    <text class="label ink" x="44" y="58">B. Selected + Sortable Cards</text>
+    <text class="small muted" x="44" y="82">Recommended: click canvas or card to select.</text>
+
+    <rect class="cream" rx="24" x="22" y="126" width="240" height="430"/>
+    <path class="strokeA" d="M60 225 C118 138 170 318 234 245"/>
+    <path class="selectedStroke" d="M66 385 C126 348 188 420 230 355"/>
+    <path class="strokeB" d="M66 385 C126 348 188 420 230 355"/>
+    <path class="strokeC" d="M70 474 C116 438 166 502 232 454"/>
+    <circle class="blue" cx="230" cy="355" r="9"/>
+
+    <g transform="translate(284 126)">
+      <rect class="creamSoft" rx="20" width="134" height="92"/>
+      <text class="num ink" x="14" y="38">01</text>
+      <rect class="red" rx="99" x="58" y="22" width="52" height="8"/>
+      <text class="small muted" x="16" y="68">drag</text>
+    </g>
+    <g transform="translate(276 236)">
+      <rect class="yellow" rx="22" width="150" height="118"/>
+      <text class="num ink" x="18" y="42">02</text>
+      <rect class="blue" rx="99" x="62" y="26" width="62" height="8"/>
+      <text class="mono ink" x="18" y="70">SELECTED</text>
+      <rect class="cream" rx="99" x="18" y="90" width="112" height="8"/>
+      <rect class="blue" rx="99" x="18" y="90" width="58" height="8"/>
+    </g>
+    <g transform="translate(284 372)">
+      <rect class="creamSoft" rx="20" width="134" height="92"/>
+      <text class="num ink" x="14" y="38">03</text>
+      <rect class="yellow" rx="99" x="58" y="22" width="52" height="8"/>
+      <text class="small muted" x="16" y="68">drag</text>
+    </g>
+
+    <rect class="creamSoft" rx="22" x="22" y="584" width="396" height="86"/>
+    <text class="mono ink" x="44" y="619">What it proves</text>
+    <text class="small muted" x="44" y="646">Canvas and card become one editing object.</text>
+  </g>
+
+  <g transform="translate(1012 125)">
+    <rect class="panel" rx="34" width="440" height="710"/>
+    <rect class="yellow" rx="26" x="22" y="22" width="396" height="82"/>
+    <text class="label ink" x="44" y="58">C. Mini Timeline Strip</text>
+    <text class="small muted" x="44" y="82">More expressive, but heavier for this stage.</text>
+
+    <rect class="cream" rx="24" x="22" y="126" width="396" height="254"/>
+    <path class="strokeA" d="M68 235 C132 150 220 320 338 244"/>
+    <path class="strokeB" d="M70 318 C154 276 236 350 340 294"/>
+
+    <rect class="creamSoft" rx="22" x="22" y="404" width="396" height="150"/>
+    <text class="mono ink" x="44" y="438">SEQUENCE STRIP</text>
+    <line class="line" x1="44" y1="480" x2="396" y2="480"/>
+    <rect class="red" rx="12" x="54" y="458" width="86" height="44"/>
+    <rect class="blue" rx="12" x="162" y="458" width="126" height="44"/>
+    <rect class="yellow" rx="12" x="312" y="458" width="58" height="44"/>
+    <text class="small ink" x="76" y="486">01</text>
+    <text class="small ink" x="210" y="486">02</text>
+    <text class="small ink" x="330" y="486">03</text>
+
+    <g transform="translate(22 584)">
+      <rect class="creamSoft" rx="22" width="396" height="86"/>
+      <text class="mono ink" x="22" y="35">What it proves</text>
+      <text class="small muted" x="22" y="62">Delay and draw time become spatial rhythm.</text>
+    </g>
+  </g>
+</svg>
