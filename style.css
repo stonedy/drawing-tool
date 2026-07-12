@@ -1000,51 +1000,53 @@ input[type="range"] {
 }
 
 @media (max-width: 640px) {
-  .app {
-    gap: 14px;
+  .app,
+  .app.expanded {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    height: auto;
+    min-height: 100svh;
+    padding: 12px;
+  }
+
+  .titleRail,
+  .app.expanded .titleRail {
+    min-height: 86px;
     padding: 14px;
   }
 
-  .topbar {
-    min-height: 0;
-  }
-
-  .globalMeta strong {
+  .titleRail h1,
+  .app.expanded .titleRail h1 {
+    writing-mode: horizontal-tb;
     max-width: none;
-    font-size: 24px;
+    margin: 8px 0;
+    font-size: 32px;
   }
 
-  .tools,
-  .toolGroup,
-  .globalControls,
-  .globalButtons {
-    display: grid;
+  .studio {
+    gap: 12px;
+  }
+
+  .topbar,
+  .app.expanded .topbar {
     grid-template-columns: 1fr;
-    align-items: stretch;
-    width: 100%;
+    min-height: 0;
+    padding: 10px;
   }
 
-  .toolGroup,
-  .globalControls {
-    border-radius: 22px;
+  .globalMeta {
+    display: none;
   }
 
-  .toolGroupLabel {
-    min-height: 24px;
-    border-right: 0;
-    border-bottom: 1px solid rgba(24, 34, 53, 0.18);
-    padding: 0 8px;
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    overflow-x: auto;
+    justify-content: start;
   }
 
-  .tools label,
-  .tools button,
-  .gradientControls {
-    width: 100%;
-  }
-
-  .gradientControls,
-  .globalControls .speedPanel {
-    grid-column: auto;
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: 1fr;
   }
 
   .canvasShell,
@@ -1054,11 +1056,9 @@ input[type="range"] {
     min-height: clamp(340px, 54svh, 560px);
   }
 
-  .strokeControls {
-  display: grid;
-  grid-template-columns: repeat(5, 30px);
-  justify-content: start;
-  gap: 7px;
+  .strokeList {
+    max-height: 44svh;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1067,5 +1067,2012 @@ input[type="range"] {
   *::after {
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
+  }
+}
+/* Scheme 02 toolbar and stroke list application */
+.topbar {
+  min-height: 74px;
+  grid-template-columns: 126px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(205, 223, 241, 0.82);
+  border-radius: 18px;
+  background: rgba(245, 250, 255, 0.88);
+  box-shadow: 0 12px 30px rgba(62, 101, 143, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  padding: 9px 12px;
+  backdrop-filter: blur(14px);
+}
+
+.globalMeta {
+  align-self: stretch;
+  display: grid;
+  align-content: center;
+  border-right: 1px solid rgba(40, 72, 109, 0.12);
+  padding-right: 10px;
+}
+
+.globalMeta p {
+  display: none;
+}
+
+.globalMeta strong {
+  display: grid;
+  gap: 2px;
+  max-width: none;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.sessionName {
+  color: #5f9ee9;
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+#status {
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.instrumentPanel {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  height: 56px;
+  overflow: visible;
+}
+
+.toolGroup,
+.globalControls,
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  gap: 8px;
+  min-height: 0;
+  height: 48px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0 10px;
+}
+
+.toolGroup + .globalControls,
+.globalControls + .toolGroup,
+.toolGroup + .toolGroup {
+  border-left: 1px solid rgba(40, 72, 109, 0.12);
+}
+
+.toolGroupLabel,
+.globalHeader h2 {
+  display: none;
+}
+
+.globalHeader {
+  display: none;
+}
+
+.toolRow,
+.globalButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.iconButton,
+.app.expanded .iconButton {
+  width: 38px;
+  min-width: 38px;
+  height: 44px;
+  flex: 0 0 38px;
+  display: inline-grid;
+  grid-template-rows: 20px 12px;
+  place-items: center;
+  gap: 2px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #263a55;
+  padding: 4px 3px 3px;
+  font-size: 11px;
+}
+
+.iconButton::after {
+  content: attr(data-label);
+  color: rgba(38, 58, 85, 0.76);
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  max-width: 44px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iconButton:hover {
+  background: rgba(223, 236, 249, 0.82);
+  border-color: transparent;
+}
+
+.iconButton.primary {
+  background: #e7f1ff;
+  color: #1e5fae;
+}
+
+#playAllButton {
+  width: 46px;
+  min-width: 46px;
+  height: 46px;
+  flex-basis: 46px;
+  grid-template-rows: 1fr;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #4f95e8;
+  box-shadow: 0 7px 16px rgba(65, 123, 190, 0.22);
+}
+
+#playAllButton::after {
+  content: "";
+  display: none;
+}
+
+#playAllButton .svgIcon {
+  width: 22px;
+  height: 22px;
+}
+
+.svgIcon,
+.app.expanded .svgIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.colorIcon,
+.gradientIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+}
+
+.widthIcon {
+  width: 17px;
+}
+
+.speedIconButton span {
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.widthPanel,
+.speedPanel,
+.gradientControls {
+  position: absolute;
+  z-index: 10;
+  top: 64px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 28px rgba(58, 92, 128, 0.14);
+}
+
+.widthPanel {
+  left: 214px;
+  width: 150px;
+}
+
+.globalControls .speedPanel {
+  left: auto;
+  right: 190px;
+  width: 170px;
+}
+
+.workArea {
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 12px;
+}
+
+.sidebar {
+  gap: 8px;
+  border-radius: 18px;
+  background: rgba(248, 252, 255, 0.76);
+  padding: 10px;
+}
+
+.sidebarHeader {
+  height: 24px;
+  padding: 0 2px;
+}
+
+.sidebarHeader h2 {
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+#activeCount {
+  font-size: 10px;
+}
+
+.strokeList {
+  gap: 6px;
+  padding-right: 2px;
+}
+
+.strokeItem {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  grid-template-areas:
+    "handle main controls"
+    "handle timing controls";
+  align-items: center;
+  gap: 3px 8px;
+  min-height: 48px;
+  border: 1px solid rgba(39, 68, 102, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: none;
+  padding: 6px 8px;
+}
+
+.strokeItem:hover,
+.strokeItem.selectedStrokeItem,
+.strokeItem.playingStroke {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 18px rgba(60, 96, 132, 0.10);
+}
+
+.strokeTitle {
+  display: contents;
+}
+
+.dragHandle,
+.app.expanded .dragHandle {
+  grid-area: handle;
+  width: 18px;
+  min-width: 18px;
+  height: 38px;
+  grid-template-columns: 1fr;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(38, 58, 85, 0.58);
+}
+
+.orderNumber {
+  display: none;
+}
+
+.gripDots {
+  grid-template-columns: repeat(2, 3px);
+  gap: 3px;
+}
+
+.gripDots i {
+  width: 3px;
+  height: 3px;
+}
+
+.strokeName {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 10px;
+  font-weight: 800;
+  color: #263a55;
+}
+
+.swatch {
+  width: 52px;
+  height: 7px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(38, 58, 85, 0.06);
+}
+
+.strokeMeta {
+  display: none;
+}
+
+.strokeControls {
+  grid-area: controls;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.strokeControls button {
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  grid-template-rows: 1fr;
+  border-radius: 6px;
+  padding: 0;
+  color: #263a55;
+}
+
+.strokeControls button::after {
+  content: "";
+  display: none;
+}
+
+.strokeControls .svgIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.timingPanel {
+  grid-area: timing;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 7px;
+  padding: 0;
+  background: transparent;
+}
+
+.timingPanel label {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 4px;
+}
+
+.timingPanel span,
+.timingPanel em {
+  font-size: 8px;
+  line-height: 1;
+  color: rgba(38, 58, 85, 0.62);
+}
+
+.timingPanel input[type="range"] {
+  grid-column: auto;
+  width: 100%;
+  height: 10px;
+  accent-color: #5f9ee9;
+}
+
+.progressTrack {
+  display: none;
+}
+
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1fr) 228px;
+}
+
+.app.expanded .sidebar {
+  padding: 8px;
+}
+
+.app.expanded .strokeItem {
+  min-height: 38px;
+  grid-template-columns: 18px minmax(0, 1fr);
+  grid-template-areas: "handle main";
+  padding: 6px;
+}
+
+.app.expanded .strokeControls,
+.app.expanded .timingPanel,
+.app.expanded .progressTrack {
+  display: none !important;
+}
+
+.app.expanded .strokeName {
+  grid-template-columns: 40px minmax(0, 1fr);
+}
+
+.app.expanded .swatch {
+  width: 40px;
+}
+
+@media (max-width: 1100px) {
+  .topbar,
+  .app.expanded .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .globalMeta {
+    display: none;
+  }
+
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    overflow-x: auto;
+    height: auto;
+    justify-content: start;
+  }
+
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive density pass: keep scheme 02 readable on large monitors. */
+:root {
+  --toolbar-button: clamp(42px, 2.55vw, 54px);
+  --toolbar-icon: clamp(18px, 1.05vw, 22px);
+  --toolbar-label: clamp(9px, 0.55vw, 11px);
+  --stroke-button: clamp(24px, 1.45vw, 30px);
+  --stroke-icon: clamp(14px, 0.9vw, 17px);
+  --stroke-card-min: clamp(64px, 4.2vw, 78px);
+  --stroke-panel-width: clamp(380px, 22vw, 460px);
+}
+
+.topbar,
+.app.expanded .topbar {
+  min-height: clamp(84px, 5vw, 98px);
+  grid-template-columns: clamp(138px, 8vw, 172px) minmax(0, 1fr);
+  padding: clamp(11px, 0.75vw, 15px) clamp(14px, 0.9vw, 18px);
+}
+
+.sessionName {
+  font-size: clamp(24px, 1.55vw, 34px);
+  line-height: 0.95;
+}
+
+#status {
+  font-size: clamp(10px, 0.58vw, 12px);
+}
+
+.instrumentPanel,
+.app.expanded .instrumentPanel {
+  height: clamp(62px, 4vw, 76px);
+  gap: 2px;
+}
+
+.toolGroup,
+.globalControls,
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  height: clamp(54px, 3.5vw, 66px);
+  gap: clamp(6px, 0.45vw, 10px);
+  padding: 0 clamp(10px, 0.8vw, 16px);
+}
+
+.iconButton,
+.app.expanded .iconButton {
+  width: var(--toolbar-button);
+  min-width: var(--toolbar-button);
+  height: clamp(52px, 3.6vw, 64px);
+  flex-basis: var(--toolbar-button);
+  grid-template-rows: clamp(22px, 1.45vw, 28px) 14px;
+  border-radius: clamp(12px, 0.85vw, 16px);
+}
+
+.iconButton::after {
+  font-size: var(--toolbar-label);
+  max-width: calc(var(--toolbar-button) + 10px);
+}
+
+.svgIcon,
+.app.expanded .svgIcon {
+  width: var(--toolbar-icon);
+  height: var(--toolbar-icon);
+}
+
+.colorIcon,
+.gradientIcon {
+  width: var(--toolbar-icon);
+  height: var(--toolbar-icon);
+}
+
+.widthIcon {
+  width: calc(var(--toolbar-icon) + 6px);
+}
+
+#playAllButton {
+  width: clamp(56px, 3.45vw, 66px);
+  min-width: clamp(56px, 3.45vw, 66px);
+  height: clamp(56px, 3.45vw, 66px);
+  flex-basis: clamp(56px, 3.45vw, 66px);
+}
+
+#playAllButton .svgIcon {
+  width: clamp(24px, 1.45vw, 30px);
+  height: clamp(24px, 1.45vw, 30px);
+}
+
+.speedIconButton span {
+  font-size: clamp(10px, 0.62vw, 12px);
+}
+
+.workArea,
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1fr) var(--stroke-panel-width);
+}
+
+.sidebar {
+  padding: clamp(12px, 0.85vw, 18px);
+}
+
+.sidebarHeader {
+  height: clamp(28px, 1.8vw, 36px);
+}
+
+.sidebarHeader h2 {
+  font-size: clamp(13px, 0.8vw, 16px);
+}
+
+#activeCount {
+  font-size: clamp(11px, 0.66vw, 13px);
+}
+
+.strokeList {
+  gap: clamp(8px, 0.65vw, 12px);
+}
+
+.strokeItem {
+  grid-template-columns: clamp(24px, 1.45vw, 30px) minmax(0, 1fr) auto;
+  gap: 5px clamp(10px, 0.75vw, 14px);
+  min-height: var(--stroke-card-min);
+  border-radius: clamp(14px, 0.9vw, 18px);
+  padding: clamp(8px, 0.6vw, 12px) clamp(10px, 0.8vw, 16px);
+}
+
+.dragHandle,
+.app.expanded .dragHandle {
+  width: clamp(24px, 1.45vw, 30px);
+  min-width: clamp(24px, 1.45vw, 30px);
+  height: clamp(46px, 2.9vw, 56px);
+  border-radius: 10px;
+}
+
+.gripDots {
+  grid-template-columns: repeat(2, 4px);
+  gap: 4px;
+}
+
+.gripDots i {
+  width: 4px;
+  height: 4px;
+}
+
+.strokeName {
+  grid-template-columns: clamp(58px, 3.8vw, 76px) minmax(0, 1fr);
+  gap: clamp(8px, 0.6vw, 12px);
+  font-size: clamp(12px, 0.72vw, 15px);
+}
+
+.swatch {
+  width: clamp(58px, 3.8vw, 76px);
+  height: clamp(8px, 0.55vw, 11px);
+}
+
+.strokeControls {
+  gap: clamp(3px, 0.28vw, 6px);
+}
+
+.strokeControls button {
+  width: var(--stroke-button);
+  min-width: var(--stroke-button);
+  height: var(--stroke-button);
+  border-radius: 8px;
+}
+
+.strokeControls .svgIcon {
+  width: var(--stroke-icon);
+  height: var(--stroke-icon);
+}
+
+.timingPanel {
+  gap: clamp(8px, 0.65vw, 12px);
+}
+
+.timingPanel label {
+  grid-template-columns: clamp(44px, 2.8vw, 58px) minmax(0, 1fr) clamp(34px, 2vw, 42px);
+  gap: clamp(5px, 0.4vw, 8px);
+}
+
+.timingPanel span,
+.timingPanel em {
+  font-size: clamp(9px, 0.56vw, 11px);
+}
+
+.timingPanel input[type="range"] {
+  height: clamp(14px, 0.95vw, 18px);
+}
+
+.app.expanded {
+  grid-template-columns: clamp(82px, 5.2vw, 104px) minmax(0, 1fr);
+}
+
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 15vw, 300px);
+}
+
+.app.expanded .strokeItem {
+  min-height: clamp(44px, 3vw, 56px);
+  grid-template-columns: clamp(22px, 1.35vw, 28px) minmax(0, 1fr);
+  padding: clamp(7px, 0.5vw, 10px);
+}
+
+.app.expanded .strokeName {
+  grid-template-columns: clamp(42px, 3vw, 60px) minmax(0, 1fr);
+  font-size: clamp(11px, 0.72vw, 13px);
+}
+
+.app.expanded .swatch {
+  width: clamp(42px, 3vw, 60px);
+}
+
+@media (max-width: 1500px) {
+  :root {
+    --stroke-panel-width: 360px;
+    --toolbar-button: 42px;
+    --stroke-button: 24px;
+  }
+
+  .topbar,
+  .app.expanded .topbar {
+    min-height: 78px;
+  }
+
+  .iconButton,
+  .app.expanded .iconButton {
+    height: 50px;
+  }
+
+  .strokeItem {
+    min-height: 62px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .app,
+  .app.expanded {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .titleRail,
+  .app.expanded .titleRail {
+    min-height: auto;
+  }
+
+  .titleRail h1,
+  .app.expanded .titleRail h1 {
+    writing-mode: horizontal-tb;
+    max-width: none;
+    margin: 10px 0;
+    font-size: clamp(36px, 6vw, 56px);
+  }
+
+  .titleRail span {
+    display: block;
+  }
+
+  .topbar,
+  .app.expanded .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .globalMeta {
+    display: none;
+  }
+
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+  }
+
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: 1fr;
+  }
+
+  .canvasShell,
+  #drawingCanvas,
+  .app.expanded .canvasShell,
+  .app.expanded #drawingCanvas {
+    min-height: clamp(420px, 58svh, 720px);
+  }
+
+  .strokeList {
+    max-height: min(46svh, 520px);
+  }
+}
+
+@media (max-width: 720px) {
+  .app,
+  .app.expanded {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .topbar,
+  .app.expanded .topbar {
+    min-height: auto;
+    border-radius: 18px;
+    padding: 10px;
+  }
+
+  .toolGroup,
+  .globalControls,
+  .app.expanded .toolGroup,
+  .app.expanded .globalControls {
+    padding: 0 7px;
+  }
+
+  .iconButton,
+  .app.expanded .iconButton {
+    width: 40px;
+    min-width: 40px;
+    height: 48px;
+    flex-basis: 40px;
+  }
+
+  #playAllButton {
+    width: 52px;
+    min-width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+  }
+
+  .strokeItem,
+  .app.expanded .strokeItem {
+    grid-template-columns: 24px minmax(0, 1fr);
+    grid-template-areas:
+      "handle main"
+      "handle controls"
+      "handle timing";
+    min-height: auto;
+  }
+
+  .strokeControls,
+  .app.expanded .strokeControls {
+    display: flex !important;
+  }
+
+  .timingPanel,
+  .app.expanded .timingPanel {
+    display: grid !important;
+    grid-template-columns: 1fr;
+  }
+
+  .strokeControls button {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+  }
+}
+/* Concept proportion pass: match the approved mockup proportions. */
+:root {
+  --concept-toolbar-button: clamp(34px, 2vw, 42px);
+  --concept-toolbar-icon: clamp(15px, 0.9vw, 18px);
+  --concept-toolbar-label: clamp(8px, 0.48vw, 9px);
+  --concept-stroke-panel: clamp(360px, 21vw, 420px);
+  --concept-stroke-button: clamp(20px, 1.15vw, 24px);
+  --concept-stroke-icon: clamp(12px, 0.72vw, 15px);
+}
+
+.topbar,
+.app.expanded .topbar {
+  min-height: clamp(58px, 3.8vw, 72px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  border-radius: 16px;
+  padding: clamp(6px, 0.48vw, 9px) clamp(8px, 0.68vw, 13px);
+}
+
+.globalMeta {
+  display: none !important;
+}
+
+.instrumentPanel,
+.app.expanded .instrumentPanel {
+  height: clamp(46px, 3.2vw, 58px);
+  justify-content: flex-start;
+  gap: 0;
+  overflow: visible;
+}
+
+.toolGroup,
+.globalControls,
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  height: clamp(42px, 2.8vw, 52px);
+  gap: clamp(3px, 0.28vw, 6px);
+  padding: 0 clamp(7px, 0.58vw, 12px);
+}
+
+.iconButton,
+.app.expanded .iconButton {
+  width: var(--concept-toolbar-button);
+  min-width: var(--concept-toolbar-button);
+  height: clamp(38px, 2.7vw, 48px);
+  flex-basis: var(--concept-toolbar-button);
+  grid-template-rows: clamp(17px, 1.1vw, 21px) 11px;
+  gap: 1px;
+  border-radius: 10px;
+  padding: 3px 2px 2px;
+}
+
+.iconButton::after {
+  font-size: var(--concept-toolbar-label);
+  max-width: calc(var(--concept-toolbar-button) + 8px);
+}
+
+.svgIcon,
+.app.expanded .svgIcon {
+  width: var(--concept-toolbar-icon);
+  height: var(--concept-toolbar-icon);
+}
+
+.colorIcon,
+.gradientIcon {
+  width: var(--concept-toolbar-icon);
+  height: var(--concept-toolbar-icon);
+  border-radius: 4px;
+}
+
+.widthIcon {
+  width: calc(var(--concept-toolbar-icon) + 4px);
+}
+
+#playAllButton {
+  width: clamp(44px, 2.75vw, 54px);
+  min-width: clamp(44px, 2.75vw, 54px);
+  height: clamp(44px, 2.75vw, 54px);
+  flex-basis: clamp(44px, 2.75vw, 54px);
+  box-shadow: 0 7px 18px rgba(65, 123, 190, 0.18);
+}
+
+#playAllButton .svgIcon {
+  width: clamp(19px, 1.12vw, 23px);
+  height: clamp(19px, 1.12vw, 23px);
+}
+
+.speedIconButton span {
+  font-size: clamp(8px, 0.5vw, 10px);
+}
+
+.workArea,
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1fr) var(--concept-stroke-panel);
+  gap: clamp(10px, 0.75vw, 14px);
+}
+
+.sidebar {
+  border-radius: 16px;
+  padding: clamp(9px, 0.65vw, 13px);
+}
+
+.sidebarHeader {
+  height: clamp(24px, 1.45vw, 30px);
+  padding: 0 2px;
+}
+
+.sidebarHeader h2 {
+  font-size: clamp(11px, 0.68vw, 14px);
+  letter-spacing: 0.1em;
+}
+
+#activeCount {
+  font-size: clamp(9px, 0.58vw, 11px);
+}
+
+.strokeList {
+  gap: clamp(5px, 0.48vw, 8px);
+}
+
+.strokeItem {
+  grid-template-columns: clamp(18px, 1.05vw, 22px) minmax(0, 1fr) auto;
+  grid-template-areas:
+    "handle main controls"
+    "handle timing controls";
+  min-height: clamp(50px, 3.35vw, 62px);
+  gap: 3px clamp(7px, 0.52vw, 10px);
+  border-radius: 12px;
+  padding: clamp(6px, 0.45vw, 9px) clamp(7px, 0.55vw, 11px);
+}
+
+.dragHandle,
+.app.expanded .dragHandle {
+  width: clamp(18px, 1.05vw, 22px);
+  min-width: clamp(18px, 1.05vw, 22px);
+  height: clamp(34px, 2.25vw, 44px);
+  border-radius: 8px;
+}
+
+.gripDots {
+  grid-template-columns: repeat(2, 3px);
+  gap: 3px;
+}
+
+.gripDots i {
+  width: 3px;
+  height: 3px;
+}
+
+.strokeName {
+  grid-template-columns: clamp(46px, 2.9vw, 58px) minmax(0, 1fr);
+  gap: clamp(6px, 0.45vw, 9px);
+  font-size: clamp(10px, 0.62vw, 12px);
+  line-height: 1.05;
+}
+
+.swatch {
+  width: clamp(46px, 2.9vw, 58px);
+  height: clamp(6px, 0.42vw, 8px);
+}
+
+.strokeControls {
+  gap: clamp(2px, 0.2vw, 4px);
+}
+
+.strokeControls button {
+  width: var(--concept-stroke-button);
+  min-width: var(--concept-stroke-button);
+  height: var(--concept-stroke-button);
+  border-radius: 6px;
+}
+
+.strokeControls .svgIcon {
+  width: var(--concept-stroke-icon);
+  height: var(--concept-stroke-icon);
+}
+
+.timingPanel {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(5px, 0.42vw, 8px);
+}
+
+.timingPanel label {
+  grid-template-columns: clamp(34px, 2.12vw, 43px) minmax(0, 1fr) clamp(26px, 1.55vw, 34px);
+  gap: clamp(3px, 0.28vw, 5px);
+}
+
+.timingPanel span,
+.timingPanel em {
+  font-size: clamp(7px, 0.46vw, 9px);
+  white-space: nowrap;
+}
+
+.timingPanel input[type="range"] {
+  height: clamp(10px, 0.7vw, 13px);
+}
+
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 13vw, 260px);
+}
+
+.app.expanded .strokeItem {
+  min-height: clamp(38px, 2.45vw, 46px);
+  grid-template-columns: clamp(17px, 1vw, 21px) minmax(0, 1fr);
+  grid-template-areas: "handle main";
+  padding: clamp(5px, 0.38vw, 7px);
+}
+
+.app.expanded .strokeName {
+  grid-template-columns: clamp(36px, 2.35vw, 48px) minmax(0, 1fr);
+  font-size: clamp(9px, 0.58vw, 11px);
+}
+
+.app.expanded .swatch {
+  width: clamp(36px, 2.35vw, 48px);
+}
+
+@media (max-width: 1500px) {
+  :root {
+    --concept-stroke-panel: 340px;
+    --concept-toolbar-button: 38px;
+    --concept-stroke-button: 22px;
+  }
+
+  .topbar,
+  .app.expanded .topbar {
+    min-height: 68px;
+  }
+
+  .strokeItem {
+    min-height: 56px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .topbar,
+  .app.expanded .topbar {
+    min-height: auto;
+  }
+
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .strokeItem,
+  .app.expanded .strokeItem {
+    grid-template-columns: 22px minmax(0, 1fr);
+    grid-template-areas:
+      "handle main"
+      "handle controls"
+      "handle timing";
+  }
+
+  .strokeControls,
+  .app.expanded .strokeControls {
+    display: flex !important;
+  }
+
+  .timingPanel,
+  .app.expanded .timingPanel {
+    display: grid !important;
+    grid-template-columns: 1fr;
+  }
+}
+/* Keep stroke-card action icons independent from the top toolbar sizing. */
+.strokeControls .iconButton,
+.strokeControls button,
+.app.expanded .strokeControls .iconButton,
+.app.expanded .strokeControls button {
+  width: var(--concept-stroke-button) !important;
+  min-width: var(--concept-stroke-button) !important;
+  height: var(--concept-stroke-button) !important;
+  flex: 0 0 var(--concept-stroke-button) !important;
+  grid-template-rows: 1fr !important;
+  padding: 0 !important;
+}
+
+.strokeControls .iconButton::after,
+.strokeControls button::after {
+  content: "" !important;
+  display: none !important;
+}
+
+.strokeControls .svgIcon {
+  width: var(--concept-stroke-icon) !important;
+  height: var(--concept-stroke-icon) !important;
+}
+/* Final mockup fidelity pass: top toolbar and stroke cards. */
+.topbar,
+.app.expanded .topbar {
+  min-height: 56px !important;
+  height: 56px !important;
+  grid-template-columns: 1fr !important;
+  align-items: center !important;
+  border-radius: 12px !important;
+  padding: 5px 8px !important;
+}
+
+.instrumentPanel,
+.app.expanded .instrumentPanel {
+  height: 46px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+.toolGroup,
+.globalControls,
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  height: 42px !important;
+  min-height: 42px !important;
+  gap: 3px !important;
+  padding: 0 8px !important;
+}
+
+.toolGroup + .globalControls,
+.globalControls + .toolGroup,
+.toolGroup + .toolGroup {
+  border-left: 1px solid rgba(40, 72, 109, 0.14) !important;
+}
+
+.iconButton,
+.app.expanded .iconButton {
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 38px !important;
+  flex: 0 0 34px !important;
+  grid-template-rows: 18px 10px !important;
+  gap: 1px !important;
+  border-radius: 8px !important;
+  padding: 3px 2px 2px !important;
+}
+
+.iconButton::after {
+  font-size: 7px !important;
+  line-height: 1 !important;
+  max-width: 40px !important;
+}
+
+.svgIcon,
+.app.expanded .svgIcon,
+.iconButton .svgIcon,
+.app.expanded .iconButton .svgIcon {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.colorIcon,
+.gradientIcon {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.widthIcon {
+  width: 18px !important;
+}
+
+#playAllButton {
+  width: 42px !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  flex-basis: 42px !important;
+  border-radius: 50% !important;
+}
+
+#playAllButton .svgIcon {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.speedIconButton span {
+  font-size: 8px !important;
+}
+
+.workArea,
+.app.expanded .workArea {
+  grid-template-columns: minmax(0, 1fr) clamp(385px, 21vw, 420px) !important;
+  gap: 12px !important;
+}
+
+.sidebar {
+  padding: 10px !important;
+  border-radius: 14px !important;
+}
+
+.sidebarHeader {
+  height: 28px !important;
+  padding: 0 2px !important;
+}
+
+.sidebarHeader h2 {
+  font-size: 13px !important;
+  letter-spacing: 0.1em !important;
+}
+
+#activeCount {
+  font-size: 10px !important;
+}
+
+.strokeList {
+  gap: 8px !important;
+}
+
+.strokeItem,
+.app.expanded .strokeItem {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 22px minmax(0, 1fr) !important;
+  grid-template-areas:
+    "handle main"
+    "handle timing" !important;
+  align-items: center !important;
+  min-height: 68px !important;
+  gap: 4px 9px !important;
+  border-radius: 12px !important;
+  padding: 8px 12px 8px 8px !important;
+}
+
+.dragHandle,
+.app.expanded .dragHandle {
+  grid-area: handle !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  height: 44px !important;
+  border-radius: 8px !important;
+}
+
+.strokeName,
+.app.expanded .strokeName {
+  grid-area: main !important;
+  display: grid !important;
+  grid-template-columns: 62px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 9px !important;
+  padding-right: 116px !important;
+  font-size: 12px !important;
+  line-height: 1.05 !important;
+}
+
+.swatch,
+.app.expanded .swatch {
+  width: 62px !important;
+  height: 7px !important;
+}
+
+.strokeControls,
+.app.expanded .strokeControls {
+  position: absolute !important;
+  top: 13px !important;
+  right: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.strokeControls .iconButton,
+.strokeControls button,
+.app.expanded .strokeControls .iconButton,
+.app.expanded .strokeControls button {
+  width: 18px !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 18px !important;
+  border-radius: 5px !important;
+  padding: 0 !important;
+  grid-template-rows: 1fr !important;
+}
+
+.strokeControls .svgIcon,
+.app.expanded .strokeControls .svgIcon {
+  width: 11px !important;
+  height: 11px !important;
+}
+
+.strokeControls .iconButton::after,
+.strokeControls button::after {
+  content: "" !important;
+  display: none !important;
+}
+
+.timingPanel,
+.app.expanded .timingPanel {
+  grid-area: timing !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 14px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.timingPanel label,
+.app.expanded .timingPanel label {
+  display: grid !important;
+  grid-template-columns: 42px minmax(74px, 1fr) 30px !important;
+  align-items: center !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+}
+
+.timingPanel span,
+.timingPanel em,
+.app.expanded .timingPanel span,
+.app.expanded .timingPanel em {
+  font-size: 8px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.timingPanel input[type="range"],
+.app.expanded .timingPanel input[type="range"] {
+  width: 100% !important;
+  min-width: 74px !important;
+  height: 12px !important;
+}
+
+.progressTrack,
+.app.expanded .progressTrack {
+  display: none !important;
+}
+
+@media (max-width: 1500px) {
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: minmax(0, 1fr) 360px !important;
+  }
+
+  .strokeItem,
+  .app.expanded .strokeItem {
+    min-height: 70px !important;
+  }
+
+  .timingPanel,
+  .app.expanded .timingPanel {
+    gap: 10px !important;
+  }
+
+  .timingPanel label,
+  .app.expanded .timingPanel label {
+    grid-template-columns: 40px minmax(62px, 1fr) 28px !important;
+  }
+
+  .timingPanel input[type="range"],
+  .app.expanded .timingPanel input[type="range"] {
+    min-width: 62px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .topbar,
+  .app.expanded .topbar {
+    height: auto !important;
+    min-height: 56px !important;
+  }
+
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .workArea,
+  .app.expanded .workArea {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .strokeItem,
+  .app.expanded .strokeItem {
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+    grid-template-areas:
+      "handle main"
+      "handle controls"
+      "handle timing" !important;
+    min-height: auto !important;
+  }
+
+  .strokeName,
+  .app.expanded .strokeName {
+    padding-right: 0 !important;
+  }
+
+  .strokeControls,
+  .app.expanded .strokeControls {
+    position: static !important;
+    grid-area: controls !important;
+  }
+
+  .timingPanel,
+  .app.expanded .timingPanel {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* Usability correction: timeline sliders stack vertically like the mockup, with usable track length. */
+.strokeItem,
+.app.expanded .strokeItem {
+  min-height: 78px !important;
+}
+
+.timingPanel,
+.app.expanded .timingPanel {
+  grid-template-columns: 1fr !important;
+  gap: 3px !important;
+}
+
+.timingPanel label,
+.app.expanded .timingPanel label {
+  grid-template-columns: 48px minmax(0, 1fr) 34px !important;
+  gap: 6px !important;
+}
+
+.timingPanel input[type="range"],
+.app.expanded .timingPanel input[type="range"] {
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+@media (max-width: 1500px) {
+  .strokeItem,
+  .app.expanded .strokeItem {
+    min-height: 80px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .strokeItem,
+  .app.expanded .strokeItem {
+    min-height: auto !important;
+  }
+}
+/* Reference-scale control system: a full-width instrument strip and readable stroke cards. */
+.topbar,
+.app.expanded .topbar {
+  height: 78px !important;
+  min-height: 78px !important;
+  padding: 7px 10px !important;
+  grid-template-columns: 1fr !important;
+}
+
+.globalMeta { display: none !important; }
+
+.instrumentPanel,
+.app.expanded .instrumentPanel {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: repeat(13, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  height: 62px !important;
+  overflow: visible !important;
+}
+
+.toolGroup,
+.globalControls,
+.toolRow,
+.globalButtons,
+.app.expanded .toolGroup,
+.app.expanded .globalControls { display: contents !important; }
+
+.toolGroupLabel,
+.globalHeader { display: none !important; }
+
+.toolGroup + .globalControls,
+.globalControls + .toolGroup,
+.toolGroup + .toolGroup { border-left: 0 !important; }
+
+.brushInstrument .colorButton,
+.motionInstrument #playAllButton,
+.utilityInstrument #undoButton,
+.fileInstrument #saveButton { border-left: 1px solid rgba(40, 72, 109, 0.14) !important; }
+
+.iconButton,
+.app.expanded .iconButton {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 62px !important;
+  flex: initial !important;
+  display: grid !important;
+  grid-template-rows: 27px 14px !important;
+  place-content: center !important;
+  justify-items: center !important;
+  align-items: center !important;
+  gap: 3px !important;
+  border-radius: 8px !important;
+  padding: 7px 3px 5px !important;
+}
+
+.iconButton::after {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  max-width: none !important;
+}
+
+.svgIcon,
+.app.expanded .svgIcon,
+.iconButton .svgIcon,
+.app.expanded .iconButton .svgIcon,
+.colorIcon,
+.gradientIcon {
+  width: 21px !important;
+  height: 21px !important;
+}
+
+.widthIcon { width: 25px !important; height: 21px !important; }
+.speedIconButton span { font-size: 14px !important; line-height: 21px !important; }
+
+#playAllButton {
+  width: 50px !important;
+  min-width: 50px !important;
+  height: 50px !important;
+  align-self: center !important;
+  justify-self: center !important;
+  grid-template-rows: 1fr !important;
+  border-left: 0 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+#playAllButton .svgIcon { width: 23px !important; height: 23px !important; }
+.widthPanel, .gradientControls, .speedPanel { z-index: 5; }
+
+.workArea,
+.app.expanded .workArea { grid-template-columns: minmax(0, 1fr) clamp(420px, 24vw, 480px) !important; }
+.strokeList { gap: 10px !important; }
+
+.strokeItem,
+.app.expanded .strokeItem {
+  grid-template-columns: 30px minmax(0, 1fr) !important;
+  min-height: 108px !important;
+  gap: 7px 12px !important;
+  padding: 12px 14px 12px 10px !important;
+  border-radius: 12px !important;
+}
+
+.dragHandle,
+.app.expanded .dragHandle {
+  width: 30px !important;
+  min-width: 30px !important;
+  height: 64px !important;
+  border-radius: 9px !important;
+}
+
+.gripDots { transform: scale(1.2); }
+
+.strokeName,
+.app.expanded .strokeName {
+  grid-template-columns: 80px minmax(0, 1fr) !important;
+  gap: 11px !important;
+  padding-right: 172px !important;
+  font-size: 14px !important;
+  line-height: 1.15 !important;
+}
+
+.swatch,
+.app.expanded .swatch { width: 80px !important; height: 9px !important; }
+
+.strokeControls,
+.app.expanded .strokeControls {
+  top: 16px !important;
+  right: 14px !important;
+  gap: 7px !important;
+}
+
+.strokeControls .iconButton,
+.strokeControls button,
+.app.expanded .strokeControls .iconButton,
+.app.expanded .strokeControls button {
+  width: 26px !important;
+  min-width: 26px !important;
+  height: 26px !important;
+  flex: 0 0 26px !important;
+  display: grid !important;
+  grid-template-rows: 1fr !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+}
+
+.strokeControls .svgIcon,
+.app.expanded .strokeControls .svgIcon { width: 16px !important; height: 16px !important; }
+.timingPanel, .app.expanded .timingPanel { gap: 8px !important; }
+
+.timingPanel label,
+.app.expanded .timingPanel label { grid-template-columns: 58px minmax(0, 1fr) 42px !important; gap: 9px !important; }
+
+.timingPanel span,
+.timingPanel em,
+.app.expanded .timingPanel span,
+.app.expanded .timingPanel em { font-size: 11px !important; line-height: 1.1 !important; }
+
+.timingPanel input[type="range"],
+.app.expanded .timingPanel input[type="range"] { height: 18px !important; }
+
+@media (max-width: 1200px) {
+  .topbar, .app.expanded .topbar { height: auto !important; min-height: 78px !important; }
+  .instrumentPanel, .app.expanded .instrumentPanel { min-width: 910px !important; }
+  .workArea, .app.expanded .workArea { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 720px) {
+  .topbar, .app.expanded .topbar { padding: 6px !important; }
+  .instrumentPanel, .app.expanded .instrumentPanel { height: 58px !important; }
+  .iconButton, .app.expanded .iconButton { height: 58px !important; }
+  .strokeItem, .app.expanded .strokeItem { min-height: auto !important; }
+  .strokeName, .app.expanded .strokeName { padding-right: 0 !important; }
+}
+@media (max-width: 1200px) {
+  .topbar,
+  .app.expanded .topbar {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    width: 100% !important;
+    min-width: 0 !important;
+    grid-template-columns: repeat(13, 70px) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+}
+/* Stroke score card: calibrated to the approved compact reference. */
+.strokeTitle { display: contents !important; }
+
+.strokeItem,
+.app.expanded .strokeItem {
+  display: grid !important;
+  grid-template-columns: 26px minmax(0, 1fr) max-content !important;
+  grid-template-areas:
+    "handle main controls"
+    "handle timing timing" !important;
+  min-height: 88px !important;
+  gap: 5px 10px !important;
+  padding: 8px 10px 8px 8px !important;
+  border-radius: 8px !important;
+}
+
+.dragHandle,
+.app.expanded .dragHandle {
+  width: 26px !important;
+  min-width: 26px !important;
+  height: 56px !important;
+  align-self: center !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.orderNumber { display: none !important; }
+.gripDots { transform: scale(0.92) !important; }
+
+.strokeName,
+.app.expanded .strokeName {
+  grid-area: main !important;
+  display: grid !important;
+  grid-template-columns: 18px 54px !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 26px !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+}
+
+.strokeName > span:last-child { display: none !important; }
+
+.swatch,
+.app.expanded .swatch {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 1px rgba(30, 95, 174, 0.10) !important;
+}
+
+.strokeName::after {
+  content: "";
+  width: 54px;
+  height: 20px;
+  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 20'%3E%3Cpath d='M2 12 C10 5 15 15 23 10 S36 5 43 10 S53 14 62 8' fill='none' stroke='%236b9be1' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M5 14 C13 8 17 16 25 12 S39 7 47 12' fill='none' stroke='%23b9d2f1' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+
+.strokeMeta { display: none !important; }
+
+.strokeControls,
+.app.expanded .strokeControls {
+  position: static !important;
+  grid-area: controls !important;
+  display: flex !important;
+  align-self: center !important;
+  align-items: center !important;
+  gap: 7px !important;
+  margin: 0 !important;
+}
+
+.strokeControls .iconButton,
+.strokeControls button,
+.app.expanded .strokeControls .iconButton,
+.app.expanded .strokeControls button {
+  width: 19px !important;
+  min-width: 19px !important;
+  height: 22px !important;
+  flex: 0 0 19px !important;
+  border-radius: 4px !important;
+  background: transparent !important;
+}
+
+.strokeControls .svgIcon,
+.app.expanded .strokeControls .svgIcon {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+.timingPanel,
+.app.expanded .timingPanel {
+  grid-area: timing !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 3px !important;
+  padding: 0 !important;
+}
+
+.timingPanel label,
+.app.expanded .timingPanel label {
+  display: grid !important;
+  grid-template-columns: 50px minmax(0, 1fr) 33px !important;
+  align-items: center !important;
+  gap: 7px !important;
+  min-height: 14px !important;
+}
+
+.timingPanel span,
+.timingPanel em,
+.app.expanded .timingPanel span,
+.app.expanded .timingPanel em {
+  font-size: 9px !important;
+  line-height: 1 !important;
+}
+
+.timingPanel input[type="range"],
+.app.expanded .timingPanel input[type="range"] {
+  width: 100% !important;
+  height: 12px !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 720px) {
+  .strokeItem,
+  .app.expanded .strokeItem {
+    grid-template-columns: 26px minmax(0, 1fr) max-content !important;
+    grid-template-areas:
+      "handle main controls"
+      "handle timing timing" !important;
+    min-height: 88px !important;
+  }
+}
+/* Scheme 01: Instrument Strip. Group controls by workflow instead of stretching 13 unrelated cells. */
+.studio { overflow: visible !important; }
+.topbar,
+.app.expanded .topbar {
+  position: relative !important;
+  z-index: 20 !important;
+  overflow: visible !important;
+  height: 78px !important;
+  min-height: 78px !important;
+  padding: 8px 12px !important;
+}
+
+.instrumentPanel,
+.app.expanded .instrumentPanel {
+  display: grid !important;
+  grid-template-columns: minmax(188px, 0.82fr) minmax(342px, 1.42fr) minmax(112px, 0.46fr) minmax(194px, 0.84fr) !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 62px !important;
+  overflow: visible !important;
+}
+
+.toolGroup,
+.globalControls,
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  position: relative !important;
+  display: grid !important;
+  grid-template-rows: 1fr !important;
+  align-items: center !important;
+  height: 60px !important;
+  min-height: 60px !important;
+  padding: 0 14px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.motionInstrument,
+.utilityInstrument {
+  border-left: 1px solid rgba(40, 72, 109, 0.14) !important;
+}
+
+.toolGroupLabel,
+.globalHeader { display: none !important; }
+
+.toolRow,
+.globalButtons {
+  display: grid !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 60px !important;
+  gap: 3px !important;
+}
+
+.brushInstrument .toolRow,
+.fileInstrument .toolRow { grid-template-columns: repeat(3, minmax(46px, 1fr)) !important; }
+.utilityInstrument .toolRow { grid-template-columns: repeat(2, minmax(46px, 1fr)) !important; }
+.motionInstrument .globalButtons { grid-template-columns: 1.25fr repeat(4, minmax(46px, 1fr)) !important; }
+
+.iconButton,
+.app.expanded .iconButton {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 58px !important;
+  display: grid !important;
+  grid-template-rows: 25px 12px !important;
+  place-content: center !important;
+  justify-items: center !important;
+  gap: 3px !important;
+  padding: 6px 2px 5px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+}
+
+.iconButton:hover { background: rgba(223, 236, 249, 0.82) !important; }
+.iconButton::after { font-size: 10px !important; line-height: 1 !important; }
+
+.svgIcon,
+.iconButton .svgIcon,
+.app.expanded .iconButton .svgIcon,
+.colorIcon,
+.gradientIcon { width: 21px !important; height: 21px !important; }
+.widthIcon { width: 25px !important; height: 21px !important; }
+.speedIconButton span { font-size: 13px !important; line-height: 21px !important; }
+
+#playAllButton {
+  width: 52px !important;
+  min-width: 52px !important;
+  height: 52px !important;
+  justify-self: center !important;
+  align-self: center !important;
+  grid-template-rows: 1fr !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  box-shadow: 0 5px 14px rgba(63, 113, 166, 0.16) !important;
+}
+#playAllButton .svgIcon { width: 22px !important; height: 22px !important; }
+
+.widthPanel,
+.gradientControls,
+.speedPanel {
+  position: fixed !important;
+  z-index: 1000 !important;
+  top: auto;
+  min-height: 54px;
+  padding: 12px !important;
+  border: 1px solid rgba(76, 128, 181, 0.24) !important;
+  border-radius: 12px !important;
+  background: #f9fcff !important;
+  box-shadow: 0 10px 24px rgba(43, 82, 122, 0.16) !important;
+}
+.widthPanel { width: 216px !important; }
+.gradientControls { width: 300px !important; }
+.speedPanel,
+.globalControls .speedPanel { width: 220px !important; }
+.gradientControls { grid-template-columns: minmax(0, 1fr) 34px !important; }
+
+.workArea,
+.app.expanded .workArea {
+  position: relative !important;
+  z-index: 1 !important;
+  grid-template-columns: minmax(0, 1fr) clamp(360px, 21vw, 400px) !important;
+}
+
+@media (max-width: 1200px) {
+  .topbar,
+  .app.expanded .topbar { overflow: hidden !important; }
+
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    grid-template-columns: 188px 342px 112px 194px !important;
+    min-width: 836px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    height: 60px !important;
+    min-width: 836px !important;
+  }
+}
+/* Compact Instrument Strip: preserve intentional white space instead of distributing controls across the whole bar. */
+.instrumentPanel,
+.app.expanded .instrumentPanel {
+  display: flex !important;
+  align-items: center !important;
+  width: max-content !important;
+  min-width: 0 !important;
+  gap: 0 !important;
+}
+
+.toolGroup,
+.globalControls,
+.app.expanded .toolGroup,
+.app.expanded .globalControls {
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  height: 60px !important;
+  padding: 0 14px !important;
+}
+
+.toolRow,
+.globalButtons {
+  display: grid !important;
+  width: auto !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: 48px !important;
+  height: 60px !important;
+  gap: 4px !important;
+}
+
+.motionInstrument .globalButtons { grid-auto-columns: 48px !important; }
+
+.iconButton,
+.app.expanded .iconButton {
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 58px !important;
+}
+
+#playAllButton {
+  width: 52px !important;
+  min-width: 52px !important;
+  height: 52px !important;
+  margin: 0 2px !important;
+}
+
+/* The popover lays out swatches as an adaptive grid rather than overlaying a full-size toolbar button. */
+.gradientControls {
+  display: flex !important;
+  align-items: flex-start !important;
+  width: fit-content !important;
+  min-width: 142px !important;
+  max-width: calc(100vw - 24px) !important;
+  min-height: 56px !important;
+  gap: 10px !important;
+  padding: 12px !important;
+}
+
+.gradientStops {
+  display: flex !important;
+  flex: 0 1 auto !important;
+  flex-wrap: wrap !important;
+  align-content: flex-start !important;
+  gap: 10px !important;
+  width: fit-content !important;
+  max-width: 158px !important;
+  min-width: 32px !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.gradientStop,
+.gradientStop input {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.gradientStop button {
+  top: -6px !important;
+  right: -6px !important;
+  width: 16px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  font-size: 10px !important;
+}
+
+#addGradientColor {
+  display: grid !important;
+  flex: 0 0 32px !important;
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  grid-template-rows: 1fr !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: #eef6ff !important;
+}
+
+#addGradientColor .svgIcon { width: 16px !important; height: 16px !important; }
+#addGradientColor::after { display: none !important; }
+
+@media (max-width: 1200px) {
+  .instrumentPanel,
+  .app.expanded .instrumentPanel {
+    width: max-content !important;
+    min-width: 0 !important;
   }
 }

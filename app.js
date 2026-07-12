@@ -31,6 +31,9 @@ const globalSpeedValue = document.getElementById("globalSpeedValue");
 const globalSpeedLabel = document.getElementById("globalSpeedLabel");
 const extendButton = document.getElementById("extendButton");
 
+// Tool popovers live at the document root so canvas and scrolling containers cannot clip them.
+document.body.append(widthPanel, gradientControls, globalSpeedPanel);
+
 let strokes = [];
 let currentStroke = null;
 let nextId = 1;
@@ -62,12 +65,51 @@ const ICONS = {
   sequence: '<svg class="svgIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h5"></path><path d="M4 12h9"></path><path d="M4 18h5"></path><path d="M16 7v10"></path><path d="m13 14 3 3 3-3"></path></svg>'
 };
 
+function shortButtonLabel(label) {
+  const map = {
+    "Color": "Color",
+    "Gradient Off": "Grad",
+    "Gradient On": "Grad",
+    "Undo last stroke": "Undo",
+    "Clear all strokes": "Clear",
+    "Save project": "Save",
+    "Restore project": "Load",
+    "Export PNG": "Export",
+    "Play all strokes": "Play",
+    "Pause all strokes": "Pause",
+    "Reverse all strokes": "Reverse",
+    "Loop all strokes": "Loop",
+    "Loop all strokes on": "Loop",
+    "Play sequence": "Sequence",
+    "Pause sequence": "Pause"
+  };
+  if (label.startsWith("Width")) return "Width";
+  if (label.startsWith("Speed")) return label.replace("Speed ", "");
+  return map[label] || label.split(" ")[0];
+}
+
 function setIconButton(button, icon, label) {
   button.innerHTML = ICONS[icon] || `<span aria-hidden="true">${icon}</span>`;
   button.title = label;
   button.setAttribute("aria-label", label);
+  button.dataset.label = shortButtonLabel(label);
 }
 
+function labelStaticToolbarButtons() {
+  const labels = new Map([
+    [document.querySelector(".colorButton"), "Color"],
+    [widthButton, "Width"],
+    [gradientButton, "Grad"],
+    [undoButton, "Undo"],
+    [clearButton, "Clear"],
+    [saveButton, "Save"],
+    [restoreButton, "Load"],
+    [exportButton, "Export"]
+  ]);
+  for (const [button, label] of labels) {
+    if (button) button.dataset.label = label;
+  }
+}
 function updateBrushControls() {
   const width = Number(widthPicker.value);
   const colorIcon = document.querySelector(".colorIcon");
@@ -75,6 +117,7 @@ function updateBrushControls() {
   widthValue.textContent = String(width);
   widthButton.title = `Width ${width}`;
   widthButton.setAttribute("aria-label", `Width ${width}`);
+  widthButton.dataset.label = "Width";
   widthButton.style.setProperty("--brush-width", `${Math.max(2, Math.min(10, width))}px`);
 }
 
@@ -915,6 +958,7 @@ function renderGradientStops() {
     remove.addEventListener("click", () => {
       gradientColors.splice(index, 1);
       renderGradientStops();
+      if (!gradientControls.hidden) openSecondaryMenu(gradientControls, gradientButton);
     });
     gradientStops.append(stop);
   });
@@ -922,13 +966,40 @@ function renderGradientStops() {
 
 function setGradientEnabled(enabled) {
   gradientEnabled = enabled;
-  gradientControls.hidden = !enabled;
   gradientButton.title = enabled ? "Gradient On" : "Gradient Off";
   gradientButton.setAttribute("aria-label", enabled ? "Gradient On" : "Gradient Off");
+  gradientButton.dataset.label = "Grad";
   gradientButton.classList.toggle("primary", enabled);
   gradientButton.setAttribute("aria-pressed", String(enabled));
 }
 
+const secondaryMenus = [widthPanel, gradientControls, globalSpeedPanel];
+
+function closeSecondaryMenus(except = null) {
+  for (const menu of secondaryMenus) {
+    if (menu !== except) menu.hidden = true;
+  }
+}
+
+function openSecondaryMenu(menu, anchor) {
+  closeSecondaryMenus(menu);
+  menu.hidden = false;
+  requestAnimationFrame(() => {
+    const anchorRect = anchor.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+    const left = Math.min(Math.max(12, anchorRect.left), window.innerWidth - menuRect.width - 12);
+    menu.style.left = `${Math.round(left)}px`;
+    menu.style.top = `${Math.round(anchorRect.bottom + 10)}px`;
+  });
+}
+
+function toggleSecondaryMenu(menu, anchor) {
+  if (menu.hidden) {
+    openSecondaryMenu(menu, anchor);
+  } else {
+    menu.hidden = true;
+  }
+}
 function toggleVisible(stroke) {
   stroke.visible = !stroke.visible;
   drawScene();
@@ -1015,11 +1086,17 @@ clearButton.addEventListener("click", () => {
 });
 
 gradientButton.addEventListener("click", () => {
-  setGradientEnabled(!gradientEnabled);
+  if (gradientControls.hidden) {
+    setGradientEnabled(true);
+    openSecondaryMenu(gradientControls, gradientButton);
+  } else {
+    gradientControls.hidden = true;
+    setGradientEnabled(false);
+  }
 });
 
 widthButton.addEventListener("click", () => {
-  widthPanel.hidden = !widthPanel.hidden;
+  toggleSecondaryMenu(widthPanel, widthButton);
 });
 
 widthPicker.addEventListener("input", updateBrushControls);
@@ -1033,6 +1110,7 @@ colorPicker.addEventListener("input", updateBrushControls);
 addGradientColor.addEventListener("click", () => {
   gradientColors.push(colorPicker.value);
   renderGradientStops();
+  if (!gradientControls.hidden) openSecondaryMenu(gradientControls, gradientButton);
 });
 
 playAllButton.addEventListener("click", () => playAll(1));
@@ -1040,7 +1118,7 @@ backAllButton.addEventListener("click", () => playAll(-1));
 loopAllButton.addEventListener("click", toggleLoopAll);
 sequenceAllButton.addEventListener("click", toggleSequencePlayback);
 speedAllButton.addEventListener("click", () => {
-  globalSpeedPanel.hidden = !globalSpeedPanel.hidden;
+  toggleSecondaryMenu(globalSpeedPanel, speedAllButton);
 });
 globalSpeedInput.addEventListener("input", () => {
   setGlobalSpeed(Number(globalSpeedInput.value));
@@ -1061,8 +1139,18 @@ extendButton.addEventListener("click", () => {
   window.setTimeout(resizeCanvas, 440);
 });
 
-window.addEventListener("resize", resizeCanvas);
+document.addEventListener("pointerdown", (event) => {
+  if (!event.target.closest(".instrumentPanel, .widthPanel, .gradientControls, .speedPanel")) closeSecondaryMenus();
+});
 
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  if (!widthPanel.hidden) openSecondaryMenu(widthPanel, widthButton);
+  if (!gradientControls.hidden) openSecondaryMenu(gradientControls, gradientButton);
+  if (!globalSpeedPanel.hidden) openSecondaryMenu(globalSpeedPanel, speedAllButton);
+});
+
+labelStaticToolbarButtons();
 renderGradientStops();
 setGradientEnabled(false);
 updateBrushControls();
