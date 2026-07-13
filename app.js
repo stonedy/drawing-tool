@@ -1140,7 +1140,14 @@ extendButton.addEventListener("click", () => {
 });
 
 document.addEventListener("pointerdown", (event) => {
-  if (!event.target.closest(".instrumentPanel, .widthPanel, .gradientControls, .speedPanel")) closeSecondaryMenus();
+  const target = event.target;
+  const clickedOpenMenu = secondaryMenus.some((menu) => !menu.hidden && menu.contains(target));
+  const clickedMenuTrigger = [widthButton, gradientButton, speedAllButton].some((button) => button.contains(target));
+
+  // Popovers are moved to document.body, so the whole toolbar must not count as
+  // their inside area. Closing only changes visibility; selected gradient colors
+  // remain in gradientColors and stay active on the brush.
+  if (!clickedOpenMenu && !clickedMenuTrigger) closeSecondaryMenus();
 });
 
 window.addEventListener("resize", () => {

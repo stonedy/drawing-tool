@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stroke Replay — UI Concepts</title>
+    <link rel="stylesheet" href="ui-concepts.css">
+  </head>
+  <body>
+    <header class="conceptHeader">
+      <div>
+        <p>Stroke Replay / UI study</p>
+        <h1>Four ways to frame a living stroke.</h1>
+      </div>
+      <p class="conceptIntro">四款小样保留相同功能：画笔与渐变、全局播放与序列、撤销与清空、保存恢复导出，以及笔画级播放、反向、循环、速度、显隐、删除与排序。</p>
+    </header>
+
+    <main class="conceptGrid">
+      <article class="concept conceptA" aria-labelledby="concept-a-title">
+        <header class="conceptLabel">
+          <div><span>A</span><h2 id="concept-a-title">Curator’s Desk</h2></div>
+          <p>策展桌面 · 明亮 / 克制 / 画布优先</p>
+        </header>
+        <div class="appFrame deskFrame">
+          <aside class="deskRail">
+            <div class="brand"><b>SR</b><span>Stroke<br>Replay</span></div>
+            <nav aria-label="Concept A project controls">
+              <button aria-label="Save">↓</button><button aria-label="Restore">↑</button><button aria-label="Export">□</button>
+            </nav>
+            <small>SESSION<br>07—12</small>
+          </aside>
+          <section class="deskMain">
+            <header class="deskToolbar">
+              <div class="toolCluster"><span>Brush</span><i class="inkDot"></i><button>5 px</button><button>Gradient</button></div>
+              <div class="transport"><button>◀</button><button class="active">▶</button><button>↻</button><button>1×</button><button>≡↓</button></div>
+              <div class="toolCluster compact"><button>↶</button><button>×</button></div>
+            </header>
+            <div class="deskWork">
+              <div class="artboard artboardLight">
+                <svg viewBox="0 0 640 400" role="img" aria-label="Abstract kinetic strokes">
+                  <path class="stroke coral" d="M78 250 C135 86 256 76 295 210 S443 353 562 128"/>
+                  <path class="stroke teal" d="M86 292 C164 326 206 166 324 135 S470 92 555 245"/>
+                  <path class="stroke ink" d="M128 112 C202 152 239 312 389 292 S507 218 534 170"/>
+                </svg>
+                <div class="canvasMeta"><span>03 visible strokes</span><span>1280 × 800</span></div>
+              </div>
+              <aside class="strokeLedger">
+                <div class="panelTitle"><b>Stroke index</b><span>03</span></div>
+                <ol>
+                  <li class="selected"><span class="swatch coralBg"></span><div><b>Stroke 03</b><small>gradient · 5 px</small></div><div class="miniControls">▶ ◀ ↻ ···</div></li>
+                  <li><span class="swatch tealBg"></span><div><b>Stroke 02</b><small>solid · 3 px</small></div><div class="miniControls">▶ ◀ ↻ ···</div></li>
+                  <li><span class="swatch inkBg"></span><div><b>Stroke 01</b><small>solid · 4 px</small></div><div class="miniControls">▶ ◀ ↻ ···</div></li>
+                </ol>
+              </aside>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <article class="concept conceptB" aria-labelledby="concept-b-title">
+        <header class="conceptLabel">
+          <div><span>B</span><h2 id="concept-b-title">Darkroom Console</h2></div>
+          <p>暗房控制台 · 深色 / 聚焦 / 运动感</p>
+        </header>
+        <div class="appFrame darkFrame">
+          <header class="darkHeader">
+            <div class="darkBrand"><span class="pulse"></span><b>STROKE / REPLAY</b><small>Kinetic study 04</small></div>
+            <div class="darkTransport"><button>◀</button><button class="active">▶ PLAY ALL</button><button>LOOP</button><button>1.0×</button><button>SEQUENCE</button></div>
+            <div class="darkFiles"><button>SAVE</button><button>EXPORT</button></div>
+          </header>
+          <div class="darkBody">
+            <aside class="darkTools">
+              <span>BRUSH</span><button><i class="inkDot lightDot"></i> Ink</button><button>05 / Width</button><button>◩ Gradient</button>
+              <span>EDIT</span><button>↶ Undo</button><button>× Clear</button>
+              <small>Pointer ready<br>03 strokes</small>
+            </aside>
+            <div class="darkCanvas">
+              <svg viewBox="0 0 640 400" role="img" aria-label="Abstract luminous strokes">
+                <defs><linearGradient id="neon" x1="0" x2="1"><stop stop-color="#ff6c55"/><stop offset=".5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs>
+                <path class="stroke glow" d="M72 270 C152 62 275 88 319 213 S474 340 570 116"/>
+                <path class="stroke pale" d="M90 315 C187 328 212 152 338 137 S484 94 554 250"/>
+              </svg>
+              <div class="playhead"><span></span></div>
+              <button class="expand">↗</button>
+            </div>
+            <aside class="darkIndex">
+              <div class="panelTitle"><b>STROKES</b><span>3 / 3</span></div>
+              <div class="darkStroke selected"><i class="coralBg"></i><b>03</b><small>00:01.8</small><div>▶ ◀ ↻ ◉</div></div>
+              <div class="darkStroke"><i class="tealBg"></i><b>02</b><small>00:02.4</small><div>▶ ◀ ↻ ◉</div></div>
+              <div class="darkStroke"><i class="lightBg"></i><b>01</b><small>00:01.2</small><div>▶ ◀ ↻ ◉</div></div>
+              <div class="darkSpeed"><span>SPEED</span><b>1.0×</b><div></div></div>
+            </aside>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept conceptC" aria-labelledby="concept-c-title">
+        <header class="conceptLabel">
+          <div><span>C</span><h2 id="concept-c-title">Archive Folio</h2></div>
+          <p>纸本索引 · 编辑感 / 安静 / 触觉秩序</p>
+        </header>
+        <div class="appFrame folioFrame">
+          <header class="folioHeader">
+            <div><b>Stroke Replay</b><span>Gesture archive</span></div>
+            <div class="folioActions"><button>Save</button><button>Restore</button><button>Export PNG ↗</button></div>
+          </header>
+          <div class="folioBody">
+            <aside class="folioTools">
+              <div class="folioSection"><span>Brush</span><button><i class="inkDot"></i> Graphite</button><button>Width <b>5</b></button><button>Gradient <b>Off</b></button></div>
+              <div class="folioSection"><span>Motion</span><div class="folioPlayback"><button>◀</button><button class="active">▶</button><button>↻</button></div><button class="wide">Sequence playback</button><input type="range" min="0" max="100" value="32" aria-label="Playback speed"></div>
+              <div class="folioSection bottom"><button>Undo</button><button>Clear all</button></div>
+            </aside>
+            <div class="folioCanvas artboardLight">
+              <div class="folioCaption"><b>Untitled gesture, no. 04</b><span>12 July 2026</span></div>
+              <svg viewBox="0 0 640 400" role="img" aria-label="Editorial abstract strokes">
+                <path class="stroke wine" d="M84 275 C133 112 242 70 302 208 S450 344 558 128"/>
+                <path class="stroke moss" d="M98 318 C180 327 234 163 352 142 S482 116 548 254"/>
+                <path class="stroke graphite" d="M132 106 C212 142 246 297 394 286 S502 218 532 178"/>
+              </svg>
+              <button class="folioExpand">Expand canvas</button>
+            </div>
+            <aside class="folioIndex">
+              <div class="panelTitle"><b>Index of strokes</b><span>3 visible</span></div>
+              <div class="folioStroke selected"><div><span>03</span><b>Vermilion arc</b></div><small>gradient · 5 px · 1.8 s</small><div class="wordControls"><button>Play</button><button>Reverse</button><button>Loop</button><button>More</button></div></div>
+              <div class="folioStroke"><div><span>02</span><b>Moss return</b></div><small>solid · 3 px · 2.4 s</small><div class="wordControls"><button>Play</button><button>Reverse</button><button>Loop</button><button>More</button></div></div>
+              <div class="folioStroke"><div><span>01</span><b>Graphite rise</b></div><small>solid · 4 px · 1.2 s</small><div class="wordControls"><button>Play</button><button>Reverse</button><button>Loop</button><button>More</button></div></div>
+            </aside>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept conceptD" aria-labelledby="concept-d-title">
+        <header class="conceptLabel">
+          <div><span>D</span><h2 id="concept-d-title">Temporal Instrument</h2></div>
+          <p>精密时间轴 · 技术感 / 高密度 / 直接操控</p>
+        </header>
+        <div class="appFrame instrumentFrame">
+          <header class="instrumentHeader">
+            <div class="instrumentBrand"><b>SR—04</b><span>Stroke Replay Instrument</span></div>
+            <div class="instrumentTools"><button><i class="inkDot"></i></button><button>W 05</button><button>GRD OFF</button><i></i><button>UNDO</button><button>CLEAR</button></div>
+            <div class="instrumentFiles"><button>SAVE</button><button>RESTORE</button><button class="active">EXPORT</button></div>
+          </header>
+          <div class="instrumentBody">
+            <div class="instrumentCanvas">
+              <div class="ruler"><span>0</span><span>200</span><span>400</span><span>600</span><span>800</span></div>
+              <svg viewBox="0 0 640 400" role="img" aria-label="Technical abstract strokes">
+                <path class="stroke amber" d="M76 271 C154 75 263 84 311 212 S460 341 563 122"/>
+                <path class="stroke cyan" d="M92 313 C178 334 229 158 347 139 S483 109 551 250"/>
+                <path class="stroke black" d="M130 105 C207 144 247 301 391 286 S501 215 535 170"/>
+              </svg>
+              <button class="instrumentExpand">FULL ↗</button>
+            </div>
+            <aside class="instrumentIndex">
+              <div class="panelTitle"><b>OBJECT STACK</b><span>03</span></div>
+              <div class="track selected"><header><b>03 / Gradient arc</b><div>◉ ◌ ×</div></header><div class="trackBody"><button>▶</button><button>◀</button><button>↻</button><span class="trackLine"><i style="width:72%"></i></span><b>1.0×</b></div></div>
+              <div class="track"><header><b>02 / Cyan return</b><div>◉ ◌ ×</div></header><div class="trackBody"><button>▶</button><button>◀</button><button>↻</button><span class="trackLine"><i style="width:44%"></i></span><b>0.8×</b></div></div>
+              <div class="track"><header><b>01 / Black rise</b><div>◉ ◌ ×</div></header><div class="trackBody"><button>▶</button><button>◀</button><button>↻</button><span class="trackLine"><i style="width:100%"></i></span><b>1.2×</b></div></div>
+              <div class="masterTrack"><span>MASTER TRANSPORT</span><div><button>◀</button><button class="active">▶</button><button>↻</button><button>SEQ</button><b>1.0×</b></div></div>
+            </aside>
+          </div>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

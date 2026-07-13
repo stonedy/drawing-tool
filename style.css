@@ -3024,6 +3024,11 @@ input[type="range"] {
   padding: 12px !important;
 }
 
+/* The popover's layout rule above must not override its closed state. */
+.gradientControls[hidden] {
+  display: none !important;
+}
+
 .gradientStops {
   display: flex !important;
   flex: 0 1 auto !important;
@@ -3074,5 +3079,245 @@ input[type="range"] {
   .app.expanded .instrumentPanel {
     width: max-content !important;
     min-width: 0 !important;
+  }
+}
+
+/* Soft Gallery refinement — keep the existing blue, rounded studio language while
+   giving the canvas and each user's stroke a clearer visual role. */
+:root {
+  --soft-gallery-blue: #7eade3;
+  --soft-gallery-sky: #dbeafa;
+  --soft-gallery-paper: #fbfcfe;
+  --soft-gallery-ink: #1b2940;
+  --soft-gallery-line: rgba(41, 73, 111, 0.16);
+}
+
+body {
+  background:
+    radial-gradient(circle at 7% 0%, rgba(255, 255, 255, 0.9), transparent 26%),
+    radial-gradient(circle at 100% 100%, rgba(249, 244, 235, 0.75), transparent 30%),
+    linear-gradient(135deg, #edf5fc 0%, #dce9f5 54%, #f3f6f5 100%) !important;
+}
+
+.app {
+  gap: 16px !important;
+  padding: 16px !important;
+}
+
+.titleRail {
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 24px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(221, 235, 249, 0.8)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.titleRail h1 {
+  max-width: 8ch !important;
+  font-size: clamp(42px, 3.4vw, 54px) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.titleRail p {
+  color: rgba(27, 41, 64, 0.7) !important;
+  font-weight: 750 !important;
+}
+
+.titleRail span {
+  max-width: 17ch;
+  line-height: 1.45 !important;
+}
+
+.topbar,
+.app.expanded .topbar {
+  border: 1px solid rgba(255, 255, 255, 0.68) !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(120deg, rgba(246, 251, 255, 0.84), rgba(124, 173, 228, 0.82)) !important;
+  box-shadow: 0 10px 24px rgba(46, 84, 126, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+.motionInstrument,
+.utilityInstrument {
+  border-left-color: rgba(37, 70, 108, 0.2) !important;
+}
+
+.iconButton,
+.app.expanded .iconButton {
+  color: var(--soft-gallery-ink) !important;
+  border-radius: 10px !important;
+}
+
+.iconButton:hover,
+.iconButton:focus-visible {
+  background: rgba(255, 255, 255, 0.54) !important;
+}
+
+#playAllButton {
+  color: #fff !important;
+  background: linear-gradient(135deg, #4e93dd, #306eaf) !important;
+  box-shadow: 0 5px 12px rgba(36, 89, 143, 0.24) !important;
+}
+
+.canvasShell {
+  border-color: rgba(48, 83, 122, 0.15) !important;
+  border-radius: 22px !important;
+  background: var(--soft-gallery-paper) !important;
+  box-shadow: 0 15px 32px rgba(49, 82, 117, 0.12) !important;
+}
+
+#drawingCanvas {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.96), transparent 34%),
+    #fbfcfe !important;
+}
+
+.extendButton {
+  width: 46px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  right: 14px !important;
+  bottom: 14px !important;
+  border-color: rgba(43, 74, 111, 0.16) !important;
+  border-radius: 13px !important;
+  background: rgba(251, 253, 255, 0.84) !important;
+  box-shadow: 0 4px 12px rgba(44, 78, 118, 0.12) !important;
+}
+
+.sidebar {
+  border-color: rgba(255, 255, 255, 0.72) !important;
+  border-radius: 22px !important;
+  background:
+    linear-gradient(180deg, rgba(252, 254, 255, 0.82), rgba(222, 237, 250, 0.88)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+}
+
+.sidebarHeader {
+  padding: 2px 3px 8px !important;
+  border-bottom: 1px solid rgba(45, 78, 117, 0.13) !important;
+}
+
+.sidebarHeader h2 {
+  font-size: 18px !important;
+  letter-spacing: -0.02em !important;
+}
+
+.strokeList {
+  gap: 8px !important;
+}
+
+.strokeItem,
+.app.expanded .strokeItem {
+  min-height: 92px !important;
+  border-color: rgba(51, 85, 124, 0.11) !important;
+  border-radius: 12px !important;
+  background: rgba(252, 254, 255, 0.68) !important;
+  box-shadow: none !important;
+}
+
+.strokeItem:hover,
+.strokeItem.playingStroke {
+  border-color: rgba(57, 111, 171, 0.28) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 5px 12px rgba(48, 83, 121, 0.08) !important;
+}
+
+.strokeItem.selectedStrokeItem {
+  border-color: rgba(43, 116, 183, 0.48) !important;
+  background: rgba(247, 252, 255, 0.98) !important;
+  box-shadow: 0 7px 15px rgba(48, 83, 121, 0.12) !important;
+}
+
+.strokeName,
+.app.expanded .strokeName {
+  grid-template-columns: 58px minmax(0, 1fr) !important;
+  font-size: 12px !important;
+  font-weight: 760 !important;
+  color: var(--soft-gallery-ink) !important;
+}
+
+.strokeName > span:last-child {
+  display: block !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.strokeName::after {
+  display: none !important;
+  content: none !important;
+}
+
+.swatch,
+.app.expanded .swatch {
+  width: 58px !important;
+  height: 8px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 0 0 1px rgba(42, 75, 113, 0.08) !important;
+}
+
+.strokeControls,
+.app.expanded .strokeControls {
+  gap: 5px !important;
+}
+
+.strokeControls .iconButton,
+.strokeControls button,
+.app.expanded .strokeControls .iconButton,
+.app.expanded .strokeControls button {
+  border-radius: 7px !important;
+}
+
+.timingPanel span,
+.timingPanel em,
+.app.expanded .timingPanel span,
+.app.expanded .timingPanel em {
+  color: rgba(35, 68, 104, 0.64) !important;
+}
+
+.progressTrack {
+  display: block !important;
+  grid-column: 2 / -1 !important;
+  height: 3px !important;
+  margin-top: 1px;
+  background: rgba(73, 108, 146, 0.13) !important;
+}
+
+.progressFill {
+  background: linear-gradient(90deg, #4a93df, #79b4eb) !important;
+}
+
+@media (max-width: 1200px) {
+  .app {
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+
+  .sidebar {
+    border-radius: 18px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 8px !important;
+  }
+
+  .titleRail,
+  .app.expanded .titleRail {
+    border-radius: 16px !important;
+  }
+
+  .topbar,
+  .app.expanded .topbar,
+  .canvasShell,
+  .sidebar {
+    border-radius: 16px !important;
+  }
+
+  .strokeItem,
+  .app.expanded .strokeItem {
+    min-height: 96px !important;
   }
 }
